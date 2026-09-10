@@ -316,23 +316,32 @@
           </p>
 
           <!-- Meter Interaktif: Berapa persen hari ini kamu bersemangat -->
-          <div class="energy-meter-box">
+          <div class="energy-meter-box" id="energy-meter-box">
             <div class="energy-header">
               <span class="energy-title">⚡ Berapa persen hari ini kamu bersemangat?</span>
             </div>
+
             <div class="energy-slider-wrapper">
-              <input type="range" id="energy-slider" min="0" max="100" value="100" class="energy-slider" aria-label="Berapa persen hari ini kamu bersemangat" />
-              <span class="slider-percent-badge" id="slider-val-badge">100%</span>
+              <input type="range" id="energy-slider" min="0" max="100" value="10" step="1" class="energy-slider" aria-label="Berapa persen hari ini kamu bersemangat" />
+              <span class="slider-percent-badge" id="slider-val-badge">10%</span>
             </div>
-            <div class="energy-feedback" id="energy-status-text">
-              🚀 100% Semangat Penuh! Siap Taklukkan Dunia!
+
+            <!-- Kartu Kata-kata Motivasi Spesial per Tingkat Persen -->
+            <div class="energy-quote-card" id="energy-quote-card">
+              <div class="quote-card-header">
+                <span class="energy-tier-icon" id="energy-tier-icon">🌱</span>
+                <span class="energy-tier-title" id="energy-tier-title">10% • Percikan Awal</span>
+              </div>
+              <p class="energy-quote-body" id="energy-status-text">
+                "Bahkan pohon rindang bermula dari benih kecil. 10% semangat ini adalah awal yang berharga. Jangan remehkan langkah kecilmu hari ini."
+              </p>
             </div>
           </div>
 
           <div class="interactive-actions">
-            <button class="btn btn-love" id="btn-send-love" title="Klik untuk tambah persen semangatmu!">
+            <button class="btn btn-love" id="btn-send-love" title="Klik untuk tambah persen semangatmu (+10%)">
               <span id="energy-btn-text">Berapa persen hari ini kamu bersemangat? 🔥</span>
-              <span class="love-counter" id="love-count">100%</span>
+              <span class="love-counter" id="love-count">10%</span>
             </button>
             
             <button class="btn btn-outline" id="btn-copy-quote" title="Salin pesan ucapan ini">

@@ -751,43 +751,117 @@ function triggerCelebration() {
 }
 
 // ===================================================================
-// ===================================================================
 // 9. INTERACTIVE ENERGY METER ("BERAPA PERSEN HARI INI KAMU BERSEMANGAT")
 // ===================================================================
-let energyPercent = 100;
+let energyPercent = 10;
 const energySlider = document.getElementById('energy-slider');
 const sliderValBadge = document.getElementById('slider-val-badge');
 const energyStatusText = document.getElementById('energy-status-text');
+const energyQuoteCard = document.getElementById('energy-quote-card');
+const energyTierIcon = document.getElementById('energy-tier-icon');
+const energyTierTitle = document.getElementById('energy-tier-title');
+const energyBtnText = document.getElementById('energy-btn-text');
 
-const ENERGY_EMOJIS = ['🔥', '⚡', '💖', '💯%', '✨', '🚀', '💪', '🌟', '🐾'];
+const ENERGY_EMOJIS = ['🔥', '⚡', '💖', '💯%', '✨', '🚀', '💪', '🌟', '🐾', '🌸'];
 
-const ENERGY_STATUS_MAP = [
-  { max: 15, text: "😴 Masih ngantuk & butuh istirahat ya? Tarik napas pelan-pelan yaa... ☕" },
-  { max: 35, text: "🌱 Mulai mengisi energi, pelan-pelan tapi pasti melangkah! ✨" },
-  { max: 60, text: "🙂 Lumayan bersemangat! Setengah jalan menuju kekuatan penuh! 💪" },
-  { max: 85, text: "⚡ Aura semangatmu mulai menyala terang! Siap tempur! 🔥" },
-  { max: 99, text: "🌟 Hampir maksimal! Energi positifmu luar biasa hari ini! ✨" },
-  { max: 100, text: "🚀 100% Semangat Penuh! Siap Taklukkan Segala Rintangan! 💥" },
-  { max: 200, text: "🔥 OVERLOAD! 100%+ Semangat Membara Tak Terhentikan! 💥" },
-  { max: Infinity, text: "⚡ UNSTOPPABLE LEGEND! Semangatmu Menembus Batas Alam Semesta! 🌌👑" }
+const ENERGY_TIERS = [
+  {
+    max: 0,
+    icon: "🤍",
+    title: "0% • Istirahat Dulu",
+    quote: "Tidak apa-apa kalau hari ini terasa berat. Menarik napas dan bertahan sampai detik ini pun sudah perjuangan hebat. Peluk hangat untuk jiwamu yang sedang lelah.",
+    catSpeech: "Istirahat dulu yaa, jangan dipaksakan... Aku temenin di sini 🤍🐾"
+  },
+  {
+    max: 10,
+    icon: "🌱",
+    title: "10% • Percikan Awal",
+    quote: "Bahkan pohon rindang bermula dari benih kecil. 10% semangat ini adalah awal yang berharga. Jangan remehkan langkah kecilmu hari ini.",
+    catSpeech: "Langkah kecil adalah awal hal besar! Pelan-pelan yaa~ 🐾🌱"
+  },
+  {
+    max: 20,
+    icon: "🌸",
+    title: "20% • Mulai Bersemi",
+    quote: "Jangan bandingkan prosesmu dengan orang lain. Setiap bunga mekar pada waktunya. 20% ini membuktikan kamu tidak menyerah!",
+    catSpeech: "Tuh kan, energimu mulai bertambah! Semangattt~ 🌸✨"
+  },
+  {
+    max: 30,
+    icon: "☕",
+    title: "30% • Mengumpulkan Tenaga",
+    quote: "Tarik napas panjang, minum air hangat, dan nikmati prosesnya. 30% tenagamu mulai terkumpul. Kamu jauh lebih kuat dari rasa lelahmu.",
+    catSpeech: "Sambil seruput teh atau kopi hangat yuk, biar makin bertenaga! ☕🐾"
+  },
+  {
+    max: 40,
+    icon: "⛅",
+    title: "40% • Awan Mulai Terbuka",
+    quote: "Ingat sudah seberapa jauh kamu melangkah sampai di titik ini. 40% energi positifmu mulai bersinar mengusir keraguan di dalam hati.",
+    catSpeech: "Mendung di pikiranmu mulai hilang! Kamu pasti bisa! ⛅💫"
+  },
+  {
+    max: 50,
+    icon: "💪",
+    title: "50% • Setengah Jalan",
+    quote: "Hebat! Kamu sudah mencapai setengah jalan! Bukti nyata bahwa tekadmu lebih besar daripada rasa takutmu. Teruslah melangkah!",
+    catSpeech: "Sudah 50%! Separuh jalan lagi menuju puncak keberhasilan! 💪🔥"
+  },
+  {
+    max: 60,
+    icon: "🚀",
+    title: "60% • Melaju Mantap",
+    quote: "Langkahmu makin mantap dan ritmemu makin stabil. 60% energi ini siap membantumu menuntaskan setiap target hari ini dengan lancar.",
+    catSpeech: "Gas terusss! Kecepatan dan fokusmu makin mantap nih! 🚀✨"
+  },
+  {
+    max: 70,
+    icon: "🌟",
+    title: "70% • Cahaya Keyakinan",
+    quote: "Aura percaya dirimu makin bersinar terang! 70% semangat ini akan mengubah hal-hal yang tadinya sulit menjadi jauh lebih mudah.",
+    catSpeech: "Aura positifmu kerasa banget sampai sini! Hebat banget! 🌟🐱"
+  },
+  {
+    max: 80,
+    icon: "🔥",
+    title: "80% • Semangat Membara",
+    quote: "Sedikit lagi menuju puncak! 80% energi membakar semua keraguan. Singkirkan rasa cemas, bayangkan hasil indah yang menantimu!",
+    catSpeech: "Tinggal 20% lagi! Semangatmu bener-bener berkobar hebat! 🔥🐾"
+  },
+  {
+    max: 90,
+    icon: "⚡",
+    title: "90% • Kekuatan Maksimal",
+    quote: "Tinggal selangkah lagi menuju 100%! 90% kekuatan penuh. Kamu membuktikan bahwa dirimu adalah seorang pejuang sejati yang pantang mundur!",
+    catSpeech: "Dikit lagiii! Sentuh sekali lagi sampai 100%! ⚡😻"
+  },
+  {
+    max: 100,
+    icon: "👑",
+    title: "100% • Sempurna & Tak Terhentikan!",
+    quote: "LUAR BIASA! 100% Semangat Penuh! Tak ada rintangan yang tak bisa kamu lalui hari ini. Percayalah pada dirimu, kamu siap menaklukkan dunia!",
+    catSpeech: "HOREEE 100%! Kamu hebat banget, bangga banget sama kamu! 🎉💖🐾"
+  }
 ];
 
-function getEnergyStatus(val) {
-  for (const item of ENERGY_STATUS_MAP) {
-    if (val <= item.max) return item.text;
+function getEnergyTier(val) {
+  for (const tier of ENERGY_TIERS) {
+    if (val <= tier.max) return tier;
   }
-  return "🚀 100% Semangat Penuh! Siap Taklukkan Dunia!";
+  return ENERGY_TIERS[ENERGY_TIERS.length - 1];
 }
 
 function updateEnergyUI(val, notifyCat = false) {
+  // Batas kaku maksimal 100%
+  val = Math.max(0, Math.min(100, val));
   energyPercent = val;
 
-  // Update slider jika nilainya <= 100
-  if (energySlider && val <= 100) {
+  // Update slider
+  if (energySlider) {
     energySlider.value = val;
   }
 
-  // Update badges & button
+  // Update badges & button counter
   if (sliderValBadge) {
     sliderValBadge.textContent = `${val}%`;
   }
@@ -795,39 +869,60 @@ function updateEnergyUI(val, notifyCat = false) {
     loveCountElem.textContent = `${val}%`;
   }
 
-  // Update feedback text
+  // Ambil kata-kata dan info tier khusus persentase ini
+  const tier = getEnergyTier(val);
+
+  if (energyTierIcon) {
+    energyTierIcon.textContent = tier.icon;
+  }
+  if (energyTierTitle) {
+    const titleSuffix = tier.title.includes('• ') ? tier.title.split('• ')[1] : tier.title;
+    energyTierTitle.textContent = `${val}% • ${titleSuffix}`;
+  }
   if (energyStatusText) {
-    energyStatusText.textContent = getEnergyStatus(val);
+    energyStatusText.textContent = `"${tier.quote}"`;
   }
 
-  // Respon balon kata kucing mascot
-  if (notifyCat && catBubbleText && catSpeech) {
-    if (val >= 150) {
-      catBubbleText.textContent = `WAAAH! Semangatmu ${val}%! Bener-bener tak terhentikan! 😻🔥`;
-    } else if (val >= 100) {
-      catBubbleText.textContent = `Yayy! 100% full power! Kamu keren banget hari ini! 🐾🚀`;
+  // Efek visual kartu kata-kata motivasi
+  if (energyQuoteCard) {
+    energyQuoteCard.classList.remove('pop-anim');
+    void energyQuoteCard.offsetWidth;
+    energyQuoteCard.classList.add('pop-anim');
+
+    if (val === 100) {
+      energyQuoteCard.classList.add('max-power');
+      if (energyBtnText) energyBtnText.textContent = 'Semangat 100% Sempurna! 👑';
     } else {
-      catBubbleText.textContent = `Semangatmu ${val}%! Aku bantu doain biar makin naik yaa~ 💖`;
+      energyQuoteCard.classList.remove('max-power');
+      if (energyBtnText) energyBtnText.textContent = 'Berapa persen hari ini kamu bersemangat? 🔥';
     }
+  }
+
+  // Respon kata-kata kucing mascot
+  if (notifyCat && catBubbleText && catSpeech) {
+    catSpeech.style.animation = 'none';
+    void catSpeech.offsetWidth;
+    catSpeech.style.animation = 'bubblePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    catBubbleText.textContent = tier.catSpeech;
   }
 }
 
-// Inisialisasi awal UI Persentase Semangat
-updateEnergyUI(100, false);
+// Inisialisasi awal persentase semangat pada 10%
+updateEnergyUI(10, false);
 
-// Event listener slider
+// Event listener slider: kata-kata langsung berubah mengikuti persentase
 if (energySlider) {
   energySlider.addEventListener('input', (e) => {
     const val = parseInt(e.target.value, 10);
     updateEnergyUI(val, false);
-    playChimeTone(450 + val * 3, 0.06);
+    playChimeTone(400 + val * 3, 0.05);
   });
 
   energySlider.addEventListener('change', (e) => {
     const val = parseInt(e.target.value, 10);
     updateEnergyUI(val, true);
     if (val === 100) {
-      fireConfetti(40, window.innerWidth / 2, window.innerHeight * 0.7);
+      fireConfetti(60, window.innerWidth / 2, window.innerHeight * 0.7);
     }
   });
 }
@@ -855,22 +950,24 @@ function spawnEnergyBurst() {
   }, 2800);
 }
 
-// Klik tombol: Tambah persen semangat (+5% per klik, bisa tembus > 100%!)
+// Klik tombol: Menambah persen semangat (+10% per klik) hingga maksimal 100%
 btnSendLove.addEventListener('click', () => {
-  let increment = 5;
-  if (energyPercent < 100) {
-    increment = 10;
+  let nextVal;
+  if (energyPercent >= 100) {
+    nextVal = 100; // tetap 100%
+  } else {
+    nextVal = Math.min(100, energyPercent + 10);
   }
-  const nextVal = energyPercent + increment;
+
   updateEnergyUI(nextVal, true);
 
   for (let i = 0; i < 3; i++) {
     setTimeout(spawnEnergyBurst, i * 80);
   }
 
-  if (nextVal % 25 === 0 || nextVal === 100 || nextVal > 150) {
+  if (nextVal === 100) {
     const rect = btnSendLove.getBoundingClientRect();
-    fireConfetti(45, rect.left + rect.width / 2, rect.top);
+    fireConfetti(70, rect.left + rect.width / 2, rect.top);
   }
 });
 
