@@ -751,18 +751,94 @@ function triggerCelebration() {
 }
 
 // ===================================================================
-// 9. INTERACTIVE HEART BURST ("KIRIM SEMANGAT")
 // ===================================================================
-const EMOJIS = ['💖', '✨', '🔥', '🎓', '🌟', '💪', '🌸', '🤍', '👰'];
+// 9. INTERACTIVE ENERGY METER ("BERAPA PERSEN HARI INI KAMU BERSEMANGAT")
+// ===================================================================
+let energyPercent = 100;
+const energySlider = document.getElementById('energy-slider');
+const sliderValBadge = document.getElementById('slider-val-badge');
+const energyStatusText = document.getElementById('energy-status-text');
 
-function spawnHeart() {
-  loveCount++;
-  loveCountElem.textContent = loveCount;
-  playChimeTone(620 + Math.random() * 200, 0.12);
+const ENERGY_EMOJIS = ['🔥', '⚡', '💖', '💯%', '✨', '🚀', '💪', '🌟', '🐾'];
+
+const ENERGY_STATUS_MAP = [
+  { max: 15, text: "😴 Masih ngantuk & butuh istirahat ya? Tarik napas pelan-pelan yaa... ☕" },
+  { max: 35, text: "🌱 Mulai mengisi energi, pelan-pelan tapi pasti melangkah! ✨" },
+  { max: 60, text: "🙂 Lumayan bersemangat! Setengah jalan menuju kekuatan penuh! 💪" },
+  { max: 85, text: "⚡ Aura semangatmu mulai menyala terang! Siap tempur! 🔥" },
+  { max: 99, text: "🌟 Hampir maksimal! Energi positifmu luar biasa hari ini! ✨" },
+  { max: 100, text: "🚀 100% Semangat Penuh! Siap Taklukkan Segala Rintangan! 💥" },
+  { max: 200, text: "🔥 OVERLOAD! 100%+ Semangat Membara Tak Terhentikan! 💥" },
+  { max: Infinity, text: "⚡ UNSTOPPABLE LEGEND! Semangatmu Menembus Batas Alam Semesta! 🌌👑" }
+];
+
+function getEnergyStatus(val) {
+  for (const item of ENERGY_STATUS_MAP) {
+    if (val <= item.max) return item.text;
+  }
+  return "🚀 100% Semangat Penuh! Siap Taklukkan Dunia!";
+}
+
+function updateEnergyUI(val, notifyCat = false) {
+  energyPercent = val;
+
+  // Update slider jika nilainya <= 100
+  if (energySlider && val <= 100) {
+    energySlider.value = val;
+  }
+
+  // Update badges & button
+  if (sliderValBadge) {
+    sliderValBadge.textContent = `${val}%`;
+  }
+  if (loveCountElem) {
+    loveCountElem.textContent = `${val}%`;
+  }
+
+  // Update feedback text
+  if (energyStatusText) {
+    energyStatusText.textContent = getEnergyStatus(val);
+  }
+
+  // Respon balon kata kucing mascot
+  if (notifyCat && catBubbleText && catSpeech) {
+    if (val >= 150) {
+      catBubbleText.textContent = `WAAAH! Semangatmu ${val}%! Bener-bener tak terhentikan! 😻🔥`;
+    } else if (val >= 100) {
+      catBubbleText.textContent = `Yayy! 100% full power! Kamu keren banget hari ini! 🐾🚀`;
+    } else {
+      catBubbleText.textContent = `Semangatmu ${val}%! Aku bantu doain biar makin naik yaa~ 💖`;
+    }
+  }
+}
+
+// Inisialisasi awal UI Persentase Semangat
+updateEnergyUI(100, false);
+
+// Event listener slider
+if (energySlider) {
+  energySlider.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value, 10);
+    updateEnergyUI(val, false);
+    playChimeTone(450 + val * 3, 0.06);
+  });
+
+  energySlider.addEventListener('change', (e) => {
+    const val = parseInt(e.target.value, 10);
+    updateEnergyUI(val, true);
+    if (val === 100) {
+      fireConfetti(40, window.innerWidth / 2, window.innerHeight * 0.7);
+    }
+  });
+}
+
+// Fungsi partikel melayang saat tombol diklik
+function spawnEnergyBurst() {
+  playChimeTone(550 + Math.random() * 250, 0.12);
 
   const heart = document.createElement('div');
   heart.className = 'floating-heart';
-  heart.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+  heart.textContent = ENERGY_EMOJIS[Math.floor(Math.random() * ENERGY_EMOJIS.length)];
 
   const rect = btnSendLove.getBoundingClientRect();
   const startX = rect.left + rect.width / 2 + (Math.random() * 60 - 30);
@@ -774,18 +850,27 @@ function spawnHeart() {
 
   heartsContainer.appendChild(heart);
 
-  if (loveCount % 5 === 0) {
-    fireConfetti(35, startX, startY);
-  }
-
   setTimeout(() => {
     heart.remove();
   }, 2800);
 }
 
+// Klik tombol: Tambah persen semangat (+5% per klik, bisa tembus > 100%!)
 btnSendLove.addEventListener('click', () => {
+  let increment = 5;
+  if (energyPercent < 100) {
+    increment = 10;
+  }
+  const nextVal = energyPercent + increment;
+  updateEnergyUI(nextVal, true);
+
   for (let i = 0; i < 3; i++) {
-    setTimeout(spawnHeart, i * 100);
+    setTimeout(spawnEnergyBurst, i * 80);
+  }
+
+  if (nextVal % 25 === 0 || nextVal === 100 || nextVal > 150) {
+    const rect = btnSendLove.getBoundingClientRect();
+    fireConfetti(45, rect.left + rect.width / 2, rect.top);
   }
 });
 

@@ -315,10 +315,24 @@
             Jangan biarkan penyesalan hari kemarin mencuri kebahagiaan dan peluang emas hari esok. Kamu layak meraih impianmu!
           </p>
 
+          <!-- Meter Interaktif: Berapa persen hari ini kamu bersemangat -->
+          <div class="energy-meter-box">
+            <div class="energy-header">
+              <span class="energy-title">⚡ Berapa persen hari ini kamu bersemangat?</span>
+            </div>
+            <div class="energy-slider-wrapper">
+              <input type="range" id="energy-slider" min="0" max="100" value="100" class="energy-slider" aria-label="Berapa persen hari ini kamu bersemangat" />
+              <span class="slider-percent-badge" id="slider-val-badge">100%</span>
+            </div>
+            <div class="energy-feedback" id="energy-status-text">
+              🚀 100% Semangat Penuh! Siap Taklukkan Dunia!
+            </div>
+          </div>
+
           <div class="interactive-actions">
-            <button class="btn btn-love" id="btn-send-love" title="Kirim pelukan & energi positif">
-              <span>Kirim Semangat 💖</span>
-              <span class="love-counter" id="love-count">0</span>
+            <button class="btn btn-love" id="btn-send-love" title="Klik untuk tambah persen semangatmu!">
+              <span id="energy-btn-text">Berapa persen hari ini kamu bersemangat? 🔥</span>
+              <span class="love-counter" id="love-count">100%</span>
             </button>
             
             <button class="btn btn-outline" id="btn-copy-quote" title="Salin pesan ucapan ini">
