@@ -323,6 +323,9 @@ function goToScene(targetIndex) {
     nextSceneElem.classList.add('active');
     currentScene = targetIndex;
 
+    // Perbarui pesan motivasi kucing peneman sesuai slide aktif
+    updateCatSceneSpeech(targetIndex);
+
     // Scroll halus ke tengah
     nextSceneElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
@@ -360,6 +363,142 @@ function startExperience(e) {
 // Respon instan pada klik tombol maupun amplop
 btnStart.addEventListener('click', startExperience);
 envelopeElem.addEventListener('click', startExperience);
+
+// ===================================================================
+// CUTE CAT COMPANION & PEEKING CAT SYSTEM
+// ===================================================================
+const catCompanion = document.getElementById('cat-companion');
+const catAvatar = document.getElementById('cat-avatar');
+const catSpeech = document.getElementById('cat-speech');
+const catBubbleText = document.getElementById('cat-bubble-text');
+const peekingCatCover = document.getElementById('peeking-cat-cover');
+
+const CAT_SCENE_QUOTES = [
+  "Hai! Ada pesan khusus buatmu, sentuh amplopnya yaa~ 💌",
+  "Kuliah memang menantang, tapi kamu pasti bisa melaluinya! 🎓",
+  "Skripsinya dicicil pelan-pelan ya, pasti kelar kok! 📑",
+  "Yuk lawan rasa malas bareng aku! Kamu luar biasa! 🔥",
+  "Sebentar lagi kamu pakai toga impian! Bangga banget! 🎓✨",
+  "Yayy! Kamu hebat banget! Peluk hangat dariku~ 🎉💖"
+];
+
+const CAT_CLICK_QUOTES = [
+  "Meoww~ Semangat terus yaa, aku selalu ada dukung kamu! 🐾",
+  "Purrrr~ Jangan lupa istirahat & minum air putih yaa! 💖",
+  "Nyaa~ Senyummu manis banget kalau lagi semangat! ✨",
+  "Meow! Kalau kamu sukses nanti, jangan lupa traktirin ya! 😸",
+  "Peluk hangat dari aku! Kamu pasti bisa melewati semuanya! 🐾🌸",
+  "Purrr~ Tetap percaya diri ya, kamu lebih hebat dari dugaanmu! 💫"
+];
+
+function updateCatSceneSpeech(sceneIndex) {
+  if (!catBubbleText || !catSpeech) return;
+  const quote = CAT_SCENE_QUOTES[sceneIndex] || CAT_SCENE_QUOTES[0];
+  catSpeech.style.animation = 'none';
+  void catSpeech.offsetWidth;
+  catSpeech.style.animation = 'bubblePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+  catBubbleText.textContent = quote;
+}
+
+// Suara Meow sintetis imut menggunakan Web Audio API
+function playMeowSound() {
+  try {
+    const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+    if (!audioCtx) audioCtx = new AudioCtxClass();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    if (!audioCtx) return;
+
+    const now = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    // Frekuensi khas suara meow kucing (nada naik lalu turun lembut)
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(450, now);
+    osc.frequency.exponentialRampToValueAtTime(780, now + 0.12);
+    osc.frequency.exponentialRampToValueAtTime(520, now + 0.35);
+
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(0.18, now + 0.06);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.36);
+  } catch (e) {
+    // Ignore audio limitation
+  }
+}
+
+// Efek partikel jejak kaki kucing & hati saat kucing diklik
+function spawnCatPawParticles(x, y) {
+  const icons = ['🐾', '💖', '✨', '🌸', '🐾', '🐱'];
+  const count = 7;
+
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('div');
+    p.className = 'cat-paw-particle';
+    p.textContent = icons[Math.floor(Math.random() * icons.length)];
+    
+    p.style.left = `${x}px`;
+    p.style.top = `${y}px`;
+
+    const tx = (Math.random() - 0.5) * 140;
+    const ty = - (60 + Math.random() * 80);
+    const tr = (Math.random() - 0.5) * 60;
+    p.style.setProperty('--tx', `${tx}px`);
+    p.style.setProperty('--ty', `${ty}px`);
+    p.style.setProperty('--tr', `${tr}deg`);
+
+    document.body.appendChild(p);
+
+    setTimeout(() => {
+      p.remove();
+    }, 1400);
+  }
+}
+
+function handleCatClick(e) {
+  if (e) e.stopPropagation();
+
+  // 1. Suara meow imut
+  playMeowSound();
+
+  // 2. Animasi loncat ceria
+  if (catAvatar) {
+    catAvatar.classList.remove('bounce');
+    void catAvatar.offsetWidth;
+    catAvatar.classList.add('bounce');
+  }
+
+  // 3. Partikel kaki kucing & hati
+  const rect = (catAvatar || catCompanion).getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 3;
+  spawnCatPawParticles(centerX, centerY);
+
+  // 4. Perbarui ucapan acak kucing
+  if (catBubbleText && catSpeech) {
+    const randomQuote = CAT_CLICK_QUOTES[Math.floor(Math.random() * CAT_CLICK_QUOTES.length)];
+    catSpeech.style.animation = 'none';
+    void catSpeech.offsetWidth;
+    catSpeech.style.animation = 'bubblePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    catBubbleText.textContent = randomQuote;
+  }
+}
+
+if (catCompanion) {
+  catCompanion.addEventListener('click', handleCatClick);
+}
+
+if (peekingCatCover) {
+  peekingCatCover.addEventListener('click', (e) => {
+    playMeowSound();
+    startExperience(e);
+  });
+}
 
 // Web Audio API nada lonceng feedback
 function playChimeTone(freq = 523.25, duration = 0.2) {

@@ -1148,3 +1148,227 @@ body::after {
     padding: 1.75rem 1.25rem;
   }
 }
+
+/* ===================================================================
+   CUTE ANIMATED CAT SYSTEM (PEEKING CAT & FLOATING COMPANION)
+   =================================================================== */
+
+/* 1. Peeking Cat on Cover Envelope */
+.peeking-cat {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 75px;
+  z-index: 1;
+  pointer-events: auto;
+  cursor: pointer;
+  animation: catPeekFloat 3s ease-in-out infinite alternate;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.peeking-cat:hover {
+  transform: translateX(-50%) translateY(-6px) scale(1.08);
+}
+
+.peeking-cat-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes catPeekFloat {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-6px); }
+}
+
+/* 2. Floating Cat Companion Mascot */
+.cat-companion-wrapper {
+  position: fixed;
+  bottom: 22px;
+  right: 24px;
+  z-index: 85;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: auto;
+  user-select: none;
+}
+
+.cat-speech-bubble {
+  position: relative;
+  background: rgba(15, 23, 42, 0.94);
+  border: 1.5px solid rgba(244, 63, 94, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5),
+              0 0 18px rgba(244, 63, 94, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #fff;
+  padding: 0.55rem 0.95rem;
+  border-radius: 16px;
+  border-bottom-right-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  max-width: 225px;
+  text-align: right;
+  line-height: 1.35;
+  margin-bottom: 8px;
+  animation: bubblePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.3s ease;
+}
+
+.cat-speech-bubble:hover {
+  transform: translateY(-2px);
+  border-color: rgba(244, 63, 94, 0.7);
+}
+
+.bubble-text {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffffff, #fed7aa, #fda4af);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes bubblePop {
+  0% { transform: scale(0.6) translateY(10px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.cat-avatar {
+  width: 108px;
+  height: 108px;
+  cursor: pointer;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.45));
+  animation: catBreathe 3s ease-in-out infinite;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cat-avatar:hover {
+  transform: scale(1.1) translateY(-6px);
+}
+
+.cat-avatar.bounce {
+  animation: catBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cat-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* 3. Sub-component Animations (Eyes, Ears, Tail, Paws) */
+.cat-tail-anim {
+  transform-origin: 112px 122px;
+  animation: catTailWag 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes catTailWag {
+  0% { transform: rotate(-10deg); }
+  100% { transform: rotate(20deg); }
+}
+
+.cat-eyes-group {
+  transform-origin: 80px 66px;
+  animation: catEyeBlink 4s infinite;
+}
+
+@keyframes catEyeBlink {
+  0%, 93%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.08); }
+}
+
+.cat-ear-l {
+  transform-origin: 42px 52px;
+  animation: catEarTwitchL 4.8s ease-in-out infinite;
+}
+
+.cat-ear-r {
+  transform-origin: 118px 52px;
+  animation: catEarTwitchR 4.8s ease-in-out infinite 0.35s;
+}
+
+@keyframes catEarTwitchL {
+  0%, 82%, 100% { transform: rotate(0deg); }
+  86% { transform: rotate(-9deg); }
+  90% { transform: rotate(4deg); }
+}
+
+@keyframes catEarTwitchR {
+  0%, 82%, 100% { transform: rotate(0deg); }
+  86% { transform: rotate(9deg); }
+  90% { transform: rotate(-4deg); }
+}
+
+.cat-waving-paw {
+  transform-origin: 102px 128px;
+  animation: catPawWave 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes catPawWave {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-7px) rotate(-16deg); }
+}
+
+@keyframes catBreathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.02); }
+}
+
+@keyframes catBounce {
+  0% { transform: scale(1) translateY(0); }
+  25% { transform: scale(1.18, 0.82) translateY(8px); }
+  50% { transform: scale(0.9, 1.18) translateY(-28px); }
+  75% { transform: scale(1.05, 0.95) translateY(-6px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* Floating Paw Print Particles on Click */
+.cat-paw-particle {
+  position: fixed;
+  pointer-events: none;
+  font-size: 1.4rem;
+  z-index: 999;
+  user-select: none;
+  animation: floatPaw 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes floatPaw {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.5) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx, 0px), var(--ty, -80px)) scale(1.3) rotate(var(--tr, 20deg));
+  }
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 640px) {
+  .cat-companion-wrapper {
+    bottom: 14px;
+    right: 14px;
+  }
+
+  .cat-avatar {
+    width: 82px;
+    height: 82px;
+  }
+
+  .cat-speech-bubble {
+    font-size: 0.72rem;
+    max-width: 175px;
+    padding: 0.45rem 0.75rem;
+    margin-bottom: 5px;
+  }
+
+  .peeking-cat {
+    top: -30px;
+    width: 78px;
+    height: 65px;
+  }
+}
