@@ -756,7 +756,7 @@ function triggerCelebration() {
 // ===================================================================
 // 9. INTERACTIVE ENERGY METER ("BERAPA PERSEN HARI INI KAMU BERSEMANGAT")
 // ===================================================================
-let energyPercent = 10;
+let energyPercent = 0;
 const energySlider = document.getElementById('energy-slider');
 const sliderValBadge = document.getElementById('slider-val-badge');
 const energyStatusText = document.getElementById('energy-status-text');
@@ -910,8 +910,8 @@ function updateEnergyUI(val, notifyCat = false) {
   }
 }
 
-// Inisialisasi awal persentase semangat pada 10%
-updateEnergyUI(10, false);
+// Inisialisasi awal persentase semangat pada 0%
+updateEnergyUI(0, false);
 
 // Event listener slider: kata-kata langsung berubah mengikuti persentase
 if (energySlider) {
