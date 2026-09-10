@@ -147,6 +147,7 @@
             <div class="progress-pill"></div>
             <div class="progress-pill"></div>
             <div class="progress-pill"></div>
+            <div class="progress-pill"></div>
           </div>
 
           <div class="badge-tag">Langkah 1 dari 4</div>
@@ -184,6 +185,7 @@
           <div class="progress-indicator">
             <div class="progress-pill done"></div>
             <div class="progress-pill active"></div>
+            <div class="progress-pill"></div>
             <div class="progress-pill"></div>
             <div class="progress-pill"></div>
             <div class="progress-pill"></div>
@@ -227,6 +229,7 @@
             <div class="progress-pill active"></div>
             <div class="progress-pill"></div>
             <div class="progress-pill"></div>
+            <div class="progress-pill"></div>
           </div>
 
           <div class="badge-tag">Langkah 3 dari 4</div>
@@ -267,6 +270,7 @@
             <div class="progress-pill done"></div>
             <div class="progress-pill active"></div>
             <div class="progress-pill"></div>
+            <div class="progress-pill"></div>
           </div>
 
           <div class="badge-tag">Langkah 4 dari 4</div>
@@ -298,7 +302,7 @@
         </div>
       </section>
 
-      <!-- STEP 5: Grand Finale (Wisdom Quote) -->
+      <!-- STEP 5: Renungan Untuk Jiwamu (Gambar 1) -->
       <section class="card-scene" id="scene-5">
         <div class="glass-card finale-card">
           <div class="progress-indicator">
@@ -306,7 +310,8 @@
             <div class="progress-pill done"></div>
             <div class="progress-pill done"></div>
             <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
+            <div class="progress-pill active"></div>
+            <div class="progress-pill"></div>
           </div>
 
           <div class="finale-badge">
@@ -334,6 +339,28 @@
           <p class="finale-subtext">
             Jangan biarkan penyesalan hari kemarin mencuri kebahagiaan dan peluang emas hari esok. Kamu layak meraih impianmu!
           </p>
+
+          <div class="action-row">
+            <button class="btn btn-secondary" onclick="goToScene(4)">Kembali</button>
+            <button class="btn btn-primary highlight-btn" onclick="goToScene(6)">
+              <span>Lanjut</span>
+              <span class="btn-arrow">➔</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 6: Untaian Doa & Pengukur Semangat (Gambar 2) -->
+      <section class="card-scene" id="scene-6">
+        <div class="glass-card finale-card prayer-scene-card">
+          <div class="progress-indicator">
+            <div class="progress-pill done"></div>
+            <div class="progress-pill done"></div>
+            <div class="progress-pill done"></div>
+            <div class="progress-pill done"></div>
+            <div class="progress-pill done"></div>
+            <div class="progress-pill active"></div>
+          </div>
 
           <!-- Untaian Doa Tulus & Tombol Aamiinkan -->
           <div class="prayer-card-box">
@@ -396,14 +423,18 @@
               <span class="love-counter" id="love-count">0%</span>
             </button>
             
-            <button class="btn btn-outline" id="btn-copy-quote" title="Salin pesan ucapan ini">
-              <span id="copy-icon">📋</span>
-              <span id="copy-text">Salin Ucapan</span>
-            </button>
-
-            <button class="btn btn-outline" onclick="goToScene(0)" title="Ulangi dari awal">
-              <span>Putar Ulang ↺</span>
-            </button>
+            <div class="finale-actions-row">
+              <button class="btn btn-secondary" onclick="goToScene(5)" title="Kembali ke renungan sebelumnya">
+                <span>Kembali</span>
+              </button>
+              <button class="btn btn-outline" id="btn-copy-quote" title="Salin pesan ucapan ini">
+                <span id="copy-icon">📋</span>
+                <span id="copy-text">Salin Ucapan</span>
+              </button>
+              <button class="btn btn-outline" onclick="goToScene(0)" title="Ulangi dari awal">
+                <span>Putar Ulang ↺</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>

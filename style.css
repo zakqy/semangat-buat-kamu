@@ -613,6 +613,12 @@ body::after {
               0 0 40px var(--accent-gold-glow);
 }
 
+.prayer-scene-card {
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5),
+              0 0 35px rgba(52, 211, 153, 0.18);
+}
+
 .finale-badge {
   display: inline-flex;
   align-items: center;
@@ -1101,9 +1107,18 @@ body::after {
 }
 
 .btn-love {
+  width: 100%;
   background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
   color: #ffffff;
   box-shadow: 0 4px 16px rgba(244, 63, 94, 0.4);
+}
+
+.finale-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  width: 100%;
 }
 
 .btn-love:hover {
@@ -1441,6 +1456,16 @@ body::after {
   }
 
   .interactive-actions .btn {
+    width: 100%;
+  }
+
+  .finale-actions-row {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.65rem;
+  }
+
+  .finale-actions-row .btn {
     width: 100%;
   }
 

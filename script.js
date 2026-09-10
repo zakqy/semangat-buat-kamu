@@ -319,7 +319,7 @@ function goToScene(targetIndex) {
   }
 
   setTimeout(() => {
-    scenes.forEach(s => {
+    document.querySelectorAll('.card-scene').forEach(s => {
       s.classList.remove('active', 'fade-out');
     });
 
@@ -333,7 +333,7 @@ function goToScene(targetIndex) {
     nextSceneElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
     // Grand Finale Trigger
-    if (targetIndex === 5) {
+    if (targetIndex === 5 || targetIndex === 6) {
       triggerCelebration();
     }
   }, 250);
@@ -382,7 +382,8 @@ const CAT_SCENE_QUOTES = [
   "Skripsinya dicicil pelan-pelan ya, pasti kelar kok! 📑",
   "Yuk lawan rasa malas bareng aku! Kamu luar biasa! 🔥",
   "Sebentar lagi kamu pakai toga impian! Bangga banget! 🎓✨",
-  "Yayy! Kamu hebat banget! Peluk hangat dariku~ 🎉💖"
+  "Resapi setiap maknanya yaa... Masa depan indah menantimu! 🌟✨",
+  "Aamiin! Berapa pun semangatmu hari ini, kamu tetap hebat & berharga! 🤲💖🐾"
 ];
 
 const CAT_CLICK_QUOTES = [
