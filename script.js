@@ -76,6 +76,9 @@ const audioLabel = document.getElementById('audio-label');
 const btnSendLove = document.getElementById('btn-send-love');
 const loveCountElem = document.getElementById('love-count');
 const btnCopyQuote = document.getElementById('btn-copy-quote');
+const btnAmin = document.getElementById('btn-amin');
+const aminCountElem = document.getElementById('amin-count');
+let aminCount = 0;
 const toastMsg = document.getElementById('toast-msg');
 const heartsContainer = document.getElementById('hearts-container');
 const envelopeElem = document.getElementById('envelope-elem');
@@ -972,31 +975,100 @@ btnSendLove.addEventListener('click', () => {
 });
 
 // ===================================================================
-// 10. COPY QUOTE TO CLIPBOARD & TOAST
+// 10. UNTAIAN DOA BAIK & INTERAKSI AAMIIN
+// ===================================================================
+const PRAYER_EMOJIS = ['🤲', '🤍', '🕊️', '✨', '🌟', '🌸', '💚'];
+
+function playPrayerChord() {
+  playChimeTone(528, 0.35); // Solfeggio 528Hz (Harmoni damai)
+  setTimeout(() => playChimeTone(660, 0.4), 90);
+  setTimeout(() => playChimeTone(792, 0.45), 180);
+}
+
+function spawnPrayerParticle() {
+  if (!btnAmin) return;
+  const rect = btnAmin.getBoundingClientRect();
+  const particle = document.createElement('div');
+  particle.className = 'prayer-particle';
+  particle.textContent = PRAYER_EMOJIS[Math.floor(Math.random() * PRAYER_EMOJIS.length)];
+
+  const startX = rect.left + rect.width / 2 + (Math.random() * 80 - 40);
+  const startY = rect.top;
+
+  particle.style.left = `${startX}px`;
+  particle.style.top = `${startY}px`;
+  particle.style.setProperty('--tx', `${(Math.random() - 0.5) * 90}px`);
+  particle.style.setProperty('--tr', `${(Math.random() - 0.5) * 60}deg`);
+
+  document.body.appendChild(particle);
+
+  setTimeout(() => {
+    particle.remove();
+  }, 2200);
+}
+
+if (btnAmin) {
+  btnAmin.addEventListener('click', () => {
+    aminCount++;
+    if (aminCountElem) {
+      aminCountElem.textContent = aminCount;
+    }
+
+    playPrayerChord();
+
+    for (let i = 0; i < 5; i++) {
+      setTimeout(spawnPrayerParticle, i * 75);
+    }
+
+    showToast('Doa tulusmu telah diaminkan! Semoga diijabah Tuhan Yang Maha Esa 🤲✨');
+
+    // Respon ucapan dari maskot kucing
+    if (catBubbleText && catSpeech) {
+      catSpeech.style.animation = 'none';
+      void catSpeech.offsetWidth;
+      catSpeech.style.animation = 'bubblePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      const catPrayerMessages = [
+        "Aamiin ya Rabbal 'Alamin... Doa terbaik selalu menyertaimu! 🤲🤍🐾",
+        "Semoga setiap langkah dan ikhtiarmu dimudahkan Tuhan yaa! 🕊️✨",
+        "Aku ikut mengaminkan dari sini! Semangat skripsi dan kuliahnya! 🤲🎓",
+        "Doa yang tulus akan sampai ke langit. Semangat terus pejuang tangguh! 🌟💖"
+      ];
+      catBubbleText.textContent = catPrayerMessages[(aminCount - 1) % catPrayerMessages.length];
+    }
+  });
+}
+
+// ===================================================================
+// 11. COPY QUOTE TO CLIPBOARD & TOAST
 // ===================================================================
 function showToast(text) {
   toastMsg.textContent = text;
   toastMsg.classList.add('show');
   setTimeout(() => {
     toastMsg.classList.remove('show');
-  }, 3000);
+  }, 3200);
 }
 
 btnCopyQuote.addEventListener('click', () => {
-  const fullMessage = `✨ KATA SEMANGAT UNTUKMU ✨\n\n` +
+  const fullMessage = `✨ KATA SEMANGAT & DOA TULUS UNTUKMU ✨\n\n` +
     `🎓 Semangat Kuliahnya!\n` +
     `📑 Semangat Nyusun Skripsinya!\n` +
     `🔥 Semangat, Jangan Malas!\n` +
     `🎓✨ Semangat Cepat Lulus!\n\n` +
+    `🤲 UNTAIAN DOA BAIK:\n` +
+    `• Semoga setiap langkah dan ikhtiarmu senantiasa dimudahkan dan diberkahi oleh Tuhan.\n` +
+    `• Semoga hatimu selalu tenang, dijauhkan dari rasa cemas, dan didekatkan dengan kebahagiaan.\n` +
+    `• Semoga skripsi dan kuliahmu tuntas dengan hasil terbaik yang membanggakan orang tua.\n` +
+    `• Semoga masa depanmu dipenuhi keberkahan, kesehatan, dan pintu rezeki yang terbuka lebar.\n\n` +
     `"Masa lalu tidak bisa diubah, tapi masa depan mungkin masih bisa diubah. Buanglah masa lalu, dan hidup dimasa depan." 🌟\n\n` +
     `"Semangat buat kamu yang tidak pernah menyerah, gagal? Coba lagi... okeyy, semangatttt!" 💪🔥\n\n` +
     `🎵 Lagu pengiring: Shane Filan - Beautiful in White\n` +
-    `Semoga setiap langkahmu dipenuhi keberkahan dan keberhasilan! ✨`;
+    `Semoga setiap doa dan harapan baikmu segera diijabah! Aamiin 🤲✨`;
 
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(fullMessage)
       .then(() => {
-        showToast('Ucapan indah berhasil disalin! 📋✨');
+        showToast('Ucapan & doa indah berhasil disalin! 📋✨');
         playChimeTone(880, 0.15);
       })
       .catch(() => fallbackCopy(fullMessage));
@@ -1014,7 +1086,7 @@ function fallbackCopy(text) {
   textArea.select();
   try {
     document.execCommand('copy');
-    showToast('Ucapan indah berhasil disalin! 📋✨');
+    showToast('Ucapan & doa indah berhasil disalin! 📋✨');
     playChimeTone(880, 0.15);
   } catch (err) {
     showToast('Gagal menyalin otomatis, silakan salin manual.');
