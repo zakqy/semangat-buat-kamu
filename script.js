@@ -95,6 +95,13 @@ function initAudio() {
   if (!bgAudio) return;
   bgAudio.volume = 0.85;
 
+  // Preload and buffer audio data immediately in the background
+  try {
+    bgAudio.load();
+  } catch (e) {
+    console.log(e);
+  }
+
   bgAudio.addEventListener('play', () => {
     isAudioPlaying = true;
     musicToggle.classList.add('playing');
@@ -293,7 +300,11 @@ if (btnSyncReset) {
 function goToScene(targetIndex) {
   if (targetIndex === currentScene) return;
 
-  playChimeTone(440 + targetIndex * 50, 0.12);
+  // Bunyikan nada lonceng halus hanya untuk pergantian slide berikutnya
+  // agar alunan piano lagu Beautiful in White di awal terdengar murni tanpa tertimpa suara chime
+  if (targetIndex > 1) {
+    playChimeTone(440 + targetIndex * 50, 0.12);
+  }
 
   const prevSceneElem = document.getElementById(`scene-${currentScene}`);
   const nextSceneElem = document.getElementById(`scene-${targetIndex}`);
@@ -322,20 +333,33 @@ function goToScene(targetIndex) {
   }, 250);
 }
 
-// Tombol mulai pada cover
-btnStart.addEventListener('click', () => {
-  if (bgAudio && bgAudio.paused) {
-    bgAudio.play().catch(e => console.log(e));
+// Fungsi memulai pesan dan musik secara instan tanpa jeda
+function startExperience(e) {
+  if (e) {
+    e.stopPropagation();
   }
-  goToScene(1);
-});
 
-envelopeElem.addEventListener('click', () => {
-  if (bgAudio && bgAudio.paused) {
-    bgAudio.play().catch(e => console.log(e));
+  if (bgAudio) {
+    if (bgAudio.paused) {
+      bgAudio.currentTime = 0;
+      const playPromise = bgAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isAudioPlaying = true;
+          musicToggle.classList.add('playing');
+          audioIcon.textContent = '🎵';
+          audioLabel.textContent = 'Beautiful in White';
+        }).catch(err => console.log('Audio play error:', err));
+      }
+    }
   }
+
   goToScene(1);
-});
+}
+
+// Respon instan pada klik tombol maupun amplop
+btnStart.addEventListener('click', startExperience);
+envelopeElem.addEventListener('click', startExperience);
 
 // Web Audio API nada lonceng feedback
 function playChimeTone(freq = 523.25, duration = 0.2) {
