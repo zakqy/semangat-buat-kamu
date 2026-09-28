@@ -1,573 +1,651 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pesan Semangat Untukmu ✨ | Beautiful in White</title>
-  <meta name="description" content="Animasi ucapan motivasi interaktif dengan lagu Beautiful in White dan lirik tersinkronisasi." />
-  
-  <!-- Google Fonts: Plus Jakarta Sans, Outfit & Playfair Display -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PROPOSAL DEFENSE CLEARED! | Persona 5 Calling Card Celebration</title>
+  <meta name="description" content="Persona 5 themed Thesis Proposal Defense Celebration with Calling Card, All-Out Attack, and Confidant Rank Up!" />
+
+  <!-- Google Fonts: Bebas Neue, Montserrat 900, Permanent Marker & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Permanent+Marker&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <!-- Background Audio Element with Autoplay & Loop -->
-  <audio id="bg-audio" preload="auto" autoplay loop>
-    <source src="music.mp3" type="audio/mpeg" />
-    <source src="https://archive.org/download/westlifebeautifulinwhite_201911/Westlife%20-%20Beautiful%20in%20White.mp3" type="audio/mpeg" />
-  </audio>
+<body class="p5-theme">
 
-  <!-- Canvas Background for Stars, Orbs & Particles -->
-  <canvas id="bg-canvas"></canvas>
-  <!-- Canvas for Celebration Confetti -->
-  <canvas id="confetti-canvas"></canvas>
+  <!-- Persona 5 Background Music (Shoji Meguro - School Days) -->
+  <audio id="bgm-audio" src="ATLUS GAME MUSIC, Yumi Kawamura Shoji Meguro - School Days.mp3" loop preload="auto" autoplay></audio>
 
-  <!-- Floating Header Navigation -->
-  <header class="top-nav">
+  <!-- Background Metaverse Canvas -->
+  <canvas id="p5-canvas"></canvas>
 
-    <div class="top-nav-right">
-      <!-- Lyrics Modal Toggle Button -->
-      <button id="lyrics-toggle-btn" class="lyrics-btn" aria-label="Lihat Lirik">
-        <span class="lyrics-icon">🎤</span>
-        <span class="lyrics-btn-label">Lirik</span>
-      </button>
+  <!-- Halftone Overlay Layer -->
+  <div class="halftone-overlay"></div>
+  <div class="vignette-overlay"></div>
 
-      <!-- Audio Control Button -->
-      <button id="music-toggle" class="audio-btn playing" aria-label="Toggle Musik">
-        <span class="audio-icon" id="audio-icon">🎵</span>
-        <span class="audio-label" id="audio-label">Beautiful in White</span>
-        <span class="sound-wave">
-          <span class="bar bar-1"></span>
-          <span class="bar bar-2"></span>
-          <span class="bar bar-3"></span>
+  <!-- Floating BGM Autoplay Unlock Prompt (Auto-hides as soon as audio plays) -->
+  <div class="p5-audio-unlock-banner" id="audio-unlock-banner" title="Klik di mana saja untuk memutar musik">
+    <span class="unlock-icon">🎵</span>
+    <span class="unlock-text">KLIK DI MANA SAJA UNTUK MEMULAI MUSIK</span>
+    <span class="unlock-track">"School Days"</span>
+  </div>
+
+  <!-- P5 Navigation Top Bar -->
+  <header class="p5-header">
+    <div class="nav-left">
+      <div class="metaverse-badge">
+        <span class="meta-dot"></span>
+        <span class="meta-text">METAVERSE NAVIGATOR: <strong>ACTIVE</strong></span>
+      </div>
+      <div class="p5-date-box" id="p5-current-date">
+        <span class="cal-label">MISSION:</span>
+        <span class="cal-val">PROPOSAL DEFENSE INFILTRATION</span>
+      </div>
+    </div>
+
+    <!-- BGM Music Controller -->
+    <div class="nav-right">
+      <button class="p5-nav-btn audio-btn" id="btn-toggle-bgm" aria-label="Toggle Background Music" title="Toggle BGM (School Days)">
+        <span class="btn-skew-box">
+          <span class="btn-icon" id="bgm-icon">🎵</span>
+          <span class="btn-label" id="bgm-label">BGM: ON</span>
+          <span class="audio-bars">
+            <i></i><i></i><i></i>
+          </span>
         </span>
       </button>
     </div>
   </header>
 
-  <!-- Floating Synchronized Lyrics Pill (Realtime Ticker) -->
-  <aside class="floating-lyrics-ticker" id="lyrics-ticker" title="Klik untuk buka karaoke lirik lengkap">
-    <div class="ticker-music-dot"></div>
-    <div class="ticker-content">
-      <div class="ticker-text current-lyric" id="ticker-current">♪ (Intro - Piano Canon in D) ♪</div>
-    </div>
-    <span class="ticker-expand-icon">📜</span>
-  </aside>
-
-  <!-- Main Animated Container -->
-  <main class="main-wrapper">
-    <div class="card-stage" id="card-stage">
-
-      <!-- STEP 0: Cover / Envelope -->
-      <section class="card-scene active" id="scene-0">
-        <div class="glass-card cover-card">
-          <div class="floating-icon-wrapper">
-            <div class="envelope-glow"></div>
-            <!-- Animated Cute Kitten Peeking from behind the envelope -->
-            <div class="peeking-cat" id="peeking-cat-cover" title="Halo! Sentuh aku untuk buka pesan 🐾">
-              <svg viewBox="0 0 120 100" class="peeking-cat-svg" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <radialGradient id="peek-ear-pink" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#fda4af"/>
-                    <stop offset="100%" stop-color="#f43f5e"/>
-                  </radialGradient>
-                </defs>
-                <!-- Left Ear -->
-                <g class="cat-ear-l">
-                  <polygon points="30,42 18,12 48,28" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-                  <polygon points="30,38 23,20 44,28" fill="url(#peek-ear-pink)" opacity="0.85"/>
-                </g>
-                <!-- Right Ear -->
-                <g class="cat-ear-r">
-                  <polygon points="90,42 102,12 72,28" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-                  <polygon points="90,38 97,20 76,28" fill="url(#peek-ear-pink)" opacity="0.85"/>
-                </g>
-                <!-- Head -->
-                <ellipse cx="60" cy="52" rx="38" ry="30" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-                <!-- Blush Cheeks -->
-                <ellipse cx="36" cy="60" rx="7" ry="4.5" fill="#fca5a5" opacity="0.7"/>
-                <ellipse cx="84" cy="60" rx="7" ry="4.5" fill="#fca5a5" opacity="0.7"/>
-                <!-- Whiskers -->
-                <g stroke="#cbd5e1" stroke-width="1.6" stroke-linecap="round">
-                  <line x1="18" y1="56" x2="33" y2="58"/>
-                  <line x1="16" y1="63" x2="32" y2="62"/>
-                  <line x1="102" y1="56" x2="87" y2="58"/>
-                  <line x1="104" y1="63" x2="88" y2="62"/>
-                </g>
-                <!-- Blinking Eyes -->
-                <g class="cat-eyes-group">
-                  <ellipse cx="43" cy="50" rx="6" ry="7.5" fill="#1e1b4b"/>
-                  <circle cx="41" cy="48" r="2.8" fill="#ffffff"/>
-                  <circle cx="45" cy="53" r="1.3" fill="#ffffff"/>
-                  <ellipse cx="77" cy="50" rx="6" ry="7.5" fill="#1e1b4b"/>
-                  <circle cx="75" cy="48" r="2.8" fill="#ffffff"/>
-                  <circle cx="79" cy="53" r="1.3" fill="#ffffff"/>
-                </g>
-                <!-- Nose & Mouth -->
-                <polygon points="60,58 56,55 64,55" fill="#f43f5e"/>
-                <path d="M55,60 Q60,64 60,60 Q60,64 65,60" fill="none" stroke="#475569" stroke-width="1.8" stroke-linecap="round"/>
-                <!-- Little cute paws peeking over envelope -->
-                <g class="cat-peek-paws">
-                  <ellipse cx="40" cy="80" rx="9" ry="7" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-                  <ellipse cx="80" cy="80" rx="9" ry="7" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-                </g>
-              </svg>
-            </div>
-            <div class="envelope-icon" id="envelope-elem">💌</div>
-            <div class="sparkle s-1">✦</div>
-            <div class="sparkle s-2">★</div>
-            <div class="sparkle s-3">✦</div>
-          </div>
-          
-          <span class="pill-badge">Pesan Motivasi Khusus</span>
-          <h1 class="hero-title">Ada Secarik Pesan<br><span class="gradient-text">Untuk Harimu</span></h1>
-          <p class="hero-subtitle">
-            Ketika lelah mulai menyapa dan langkah terasa berat, buka pesan kecil ini dengan alunan <em>Beautiful in White</em> untuk mengembalikan senyum dan semangatmu.
-          </p>
-
-          <div class="action-row">
-            <button class="btn btn-primary pulse-btn" id="btn-start">
-              <span>Buka Pesan 💌</span>
-              <span class="btn-arrow">➔</span>
-            </button>
-          </div>
-          <p class="hint-text">🎵 Lagu diputar otomatis • Sentuh layar atau tombol untuk menjelajah pesan ✨</p>
-        </div>
-      </section>
-
-      <!-- STEP 1: Semangat Kuliahnya -->
-      <section class="card-scene" id="scene-1">
-        <div class="glass-card story-card">
-          <div class="progress-indicator">
-            <div class="progress-pill active"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-          </div>
-
-          <div class="badge-tag">Langkah 1 dari 4</div>
-          <div class="emoji-hero">🎓</div>
-          
-          <h2 class="scene-title">Semangat Kuliahnya!</h2>
-          <div class="quote-divider"></div>
-          
-          <p class="scene-desc">
-            Setiap bangun pagi, setiap tugas yang menumpuk, dan setiap materi rumit yang kau pelajari hari ini adalah batu loncatan berharga. Percayalah, proses ini sedang membentukmu menjadi pribadi yang tangguh dan luar biasa.
-          </p>
-
-          <div class="encouragement-tag">
-            <span>💡 "Usaha tidak akan pernah mengkhianati hasil."</span>
-          </div>
-
-          <div class="prayer-pill">
-            <span class="prayer-pill-icon">🤲</span>
-            <span>Semoga Tuhan selalu mudahkan langkahmu dalam menyerap setiap ilmu berharga.</span>
-          </div>
-
-          <div class="action-row">
-            <button class="btn btn-secondary" onclick="goToScene(0)">Kembali</button>
-            <button class="btn btn-primary" onclick="goToScene(2)">
-              <span>Lanjut</span>
-              <span class="btn-arrow">➔</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 2: Semangat Nyusun Skripsinya -->
-      <section class="card-scene" id="scene-2">
-        <div class="glass-card story-card">
-          <div class="progress-indicator">
-            <div class="progress-pill done"></div>
-            <div class="progress-pill active"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-          </div>
-
-          <div class="badge-tag">Langkah 2 dari 4</div>
-          <div class="emoji-hero">📑</div>
-          
-          <h2 class="scene-title">Semangat Nyusun Skripsinya!</h2>
-          <div class="quote-divider"></div>
-          
-          <p class="scene-desc">
-            Kertas-kertas revisi, coretan dosen pembimbing, dan data yang kadang sulit diolah bukan tanda kamu gagal. Itu adalah bukti bahwa skripsimu sedang dipoles menjadi sebuah mahakarya yang siap kamu pertanggungjawabkan dengan bangga.
-          </p>
-
-          <div class="encouragement-tag">
-            <span>☕ "Satu lembar sehari tetaplah sebuah kemajuan besar."</span>
-          </div>
-
-          <div class="prayer-pill">
-            <span class="prayer-pill-icon">🤲</span>
-            <span>Semoga dibimbing dosen yang tulus & dipermudah jalan menuju ACC skripsi.</span>
-          </div>
-
-          <div class="action-row">
-            <button class="btn btn-secondary" onclick="goToScene(1)">Kembali</button>
-            <button class="btn btn-primary" onclick="goToScene(3)">
-              <span>Lanjut</span>
-              <span class="btn-arrow">➔</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 3: Semangat Jangan Malas -->
-      <section class="card-scene" id="scene-3">
-        <div class="glass-card story-card">
-          <div class="progress-indicator">
-            <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
-            <div class="progress-pill active"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-          </div>
-
-          <div class="badge-tag">Langkah 3 dari 4</div>
-          <div class="emoji-hero">🔥</div>
-          
-          <h2 class="scene-title">Semangat Jangan Malas!</h2>
-          <div class="quote-divider"></div>
-          
-          <p class="scene-desc">
-            Rasa jenuh dan rebahan memang nyaman untuk sekejap, tetapi mimpi besarmu terlalu berharga untuk dikalahkan rasa malas. Bangkitlah sekarang! Lawan rasa malasmu hari ini, dan rasakan kekuatan hebat yang ada di dalam dirimu.
-          </p>
-
-          <div class="encouragement-tag">
-            <span>⚡ "Disiplin hari ini adalah tiket kebebasanmu di masa depan."</span>
-          </div>
-
-          <div class="prayer-pill">
-            <span class="prayer-pill-icon">🤲</span>
-            <span>Semoga hatimu senantiasa dilapangkan dan dijauhkan dari rasa lelah berlebih.</span>
-          </div>
-
-          <div class="action-row">
-            <button class="btn btn-secondary" onclick="goToScene(2)">Kembali</button>
-            <button class="btn btn-primary" onclick="goToScene(4)">
-              <span>Lanjut</span>
-              <span class="btn-arrow">➔</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 4: Semangat Cepat Lulus -->
-      <section class="card-scene" id="scene-4">
-        <div class="glass-card story-card">
-          <div class="progress-indicator">
-            <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
-            <div class="progress-pill active"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-          </div>
-
-          <div class="badge-tag">Langkah 4 dari 4</div>
-          <div class="emoji-hero">🎓✨</div>
-          
-          <h2 class="scene-title">Semangat Cepat Lulus!</h2>
-          <div class="quote-divider"></div>
-          
-          <p class="scene-desc">
-            Bayangkan momen indah itu: berdiri tegak di panggung wisuda mengenakan toga impian, memeluk orang tua yang tersenyum penuh haru dan bangga kepadamu. Garis finish itu sudah semakin dekat, selesaikan dengan kemenangan!
-          </p>
-
-          <div class="encouragement-tag">
-            <span>🌟 "Sedikit lagi, perjuanganmu akan terbayar lunas!"</span>
-          </div>
-
-          <div class="prayer-pill">
-            <span class="prayer-pill-icon">🤲</span>
-            <span>Semoga hari wisuda impian bersama orang tercinta segera menjadi nyata. Aamiin!</span>
-          </div>
-
-          <div class="action-row">
-            <button class="btn btn-secondary" onclick="goToScene(3)">Kembali</button>
-            <button class="btn btn-primary highlight-btn" onclick="goToScene(5)">
-              <span>Pesan Terpenting 💫</span>
-              <span class="btn-arrow">➔</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 5: Renungan Untuk Jiwamu (Gambar 1) -->
-      <section class="card-scene" id="scene-5">
-        <div class="glass-card finale-card">
-          <div class="progress-indicator">
-            <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
-            <div class="progress-pill active"></div>
-            <div class="progress-pill"></div>
-          </div>
-
-          <div class="finale-badge">
-            <span class="sparkle-gold">✦</span> Renungan Untuk Jiwamu <span class="sparkle-gold">✦</span>
-          </div>
-
-          <div class="quote-box">
-            <div class="quote-mark open">“</div>
-            <blockquote class="quote-text" id="final-quote-text">
-              Masa lalu tidak bisa diubah,<br>
-              tapi masa depan mungkin masih bisa diubah.<br>
-              <span class="quote-highlight">Buanglah masa lalu, dan hidup dimasa depan.</span>
-            </blockquote>
-            <div class="quote-mark close">”</div>
-          </div>
-
-          <!-- Kata Semangat Tambahan -->
-          <div class="cheer-banner">
-            <span class="cheer-icon">💪🔥</span>
-            <p class="cheer-text">
-              "Semangat buat kamu yang tidak pernah menyerah, gagal? Coba lagi... okeyy, semangatttt!"
-            </p>
-          </div>
-
-          <p class="finale-subtext">
-            Jangan biarkan penyesalan hari kemarin mencuri kebahagiaan dan peluang emas hari esok. Kamu layak meraih impianmu!
-          </p>
-
-          <div class="action-row">
-            <button class="btn btn-secondary" onclick="goToScene(4)">Kembali</button>
-            <button class="btn btn-primary highlight-btn" onclick="goToScene(6)">
-              <span>Lanjut</span>
-              <span class="btn-arrow">➔</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- STEP 6: Untaian Doa & Pengukur Semangat (Gambar 2) -->
-      <section class="card-scene" id="scene-6">
-        <div class="glass-card finale-card prayer-scene-card">
-          <div class="progress-indicator">
-            <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
-            <div class="progress-pill done"></div>
-            <div class="progress-pill active"></div>
-          </div>
-
-          <!-- Untaian Doa Tulus & Tombol Aamiinkan -->
-          <div class="prayer-card-box">
-            <div class="prayer-card-header">
-              <span class="prayer-header-icon">🤲</span>
-              <span class="prayer-header-title">Untaian Doa Tulus Untukmu</span>
-            </div>
-            <div class="prayer-list">
-              <div class="prayer-item">
-                <span class="prayer-item-icon">🕊️</span>
-                <span>Semoga setiap langkah dan ikhtiarmu senantiasa dimudahkan dan diberkahi oleh Tuhan.</span>
-              </div>
-              <div class="prayer-item">
-                <span class="prayer-item-icon">🤍</span>
-                <span>Semoga hatimu selalu tenang, dijauhkan dari rasa cemas, dan didekatkan dengan kebahagiaan.</span>
-              </div>
-              <div class="prayer-item">
-                <span class="prayer-item-icon">🎓</span>
-                <span>Semoga skripsi dan kuliahmu tuntas dengan hasil terbaik yang membanggakan orang tua.</span>
-              </div>
-              <div class="prayer-item">
-                <span class="prayer-item-icon">✨</span>
-                <span>Semoga masa depanmu dipenuhi keberkahan, kesehatan, dan pintu rezeki yang terbuka lebar.</span>
-              </div>
-            </div>
-            <div class="prayer-action-row">
-              <button class="btn btn-amin" id="btn-amin" title="Klik untuk mengaminkan doa baik ini">
-                <span>Aamiinkan Doa 🤲</span>
-                <span class="amin-counter" id="amin-count">0</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Meter Interaktif: Berapa persen hari ini kamu bersemangat -->
-          <div class="energy-meter-box" id="energy-meter-box">
-            <div class="energy-header">
-              <span class="energy-title">⚡ Berapa persen hari ini kamu bersemangat?</span>
-            </div>
-
-            <div class="energy-slider-wrapper">
-              <input type="range" id="energy-slider" min="0" max="100" value="0" step="1" class="energy-slider" aria-label="Berapa persen hari ini kamu bersemangat" />
-              <span class="slider-percent-badge" id="slider-val-badge">0%</span>
-            </div>
-
-            <!-- Kartu Kata-kata Motivasi Spesial per Tingkat Persen -->
-            <div class="energy-quote-card" id="energy-quote-card">
-              <div class="quote-card-header">
-                <span class="energy-tier-icon" id="energy-tier-icon">🤍</span>
-                <span class="energy-tier-title" id="energy-tier-title">0% • Istirahat Dulu</span>
-              </div>
-              <p class="energy-quote-body" id="energy-status-text">
-                "Tidak apa-apa kalau hari ini terasa berat. Menarik napas dan bertahan sampai detik ini pun sudah perjuangan hebat. Peluk hangat untuk jiwamu yang sedang lelah."
-              </p>
-            </div>
-          </div>
-
-          <div class="interactive-actions">
-            <button class="btn btn-love" id="btn-send-love" title="Klik untuk tambah persen semangatmu (+10%)">
-              <span id="energy-btn-text">Berapa persen hari ini kamu bersemangat? 🔥</span>
-              <span class="love-counter" id="love-count">0%</span>
-            </button>
-            
-            <div class="finale-actions-row">
-              <button class="btn btn-secondary" onclick="goToScene(5)" title="Kembali ke renungan sebelumnya">
-                <span>Kembali</span>
-              </button>
-              <button class="btn btn-outline" id="btn-copy-quote" title="Salin pesan ucapan ini">
-                <span id="copy-icon">📋</span>
-                <span id="copy-text">Salin Ucapan</span>
-              </button>
-              <button class="btn btn-outline" onclick="goToScene(0)" title="Ulangi dari awal">
-                <span>Putar Ulang ↺</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  </main>
-
-  <!-- Synchronized Lyrics Modal / Karaoke Drawer -->
-  <div class="lyrics-modal-overlay" id="lyrics-modal">
-    <div class="lyrics-modal-card">
-      <div class="lyrics-header">
-        <div class="lyrics-song-info">
-          <span class="lyrics-song-title">Beautiful in White</span>
-          <span class="lyrics-song-artist">Shane Filan • Lirik Tersinkronisasi 🎵</span>
-        </div>
-        <button class="close-modal-btn" id="close-lyrics-btn" aria-label="Tutup Lirik">✕</button>
-      </div>
-
-      <div class="lyrics-scroll-box" id="lyrics-list-container">
-        <!-- Rendered dynamically by script.js -->
-      </div>
-
-      <div class="lyrics-footer">
-        <div class="lyrics-timing-controls">
-          <span class="timing-label">⚡ Penyesuaian Tempo Lirik:</span>
-          <button id="btn-sync-earlier" class="sync-adj-btn" title="Munculkan lirik lebih cepat (-0.5s)">- 0.5s (Percepat)</button>
-          <button id="btn-sync-later" class="sync-adj-btn" title="Munculkan lirik lebih lambat (+0.5s)">+ 0.5s (Perlambat)</button>
-          <button id="btn-sync-reset" class="sync-adj-btn reset" title="Kembalikan ke standar">Reset</button>
-        </div>
-        <span class="lyrics-hint">💡 Klik pada baris lirik mana saja untuk langsung melompat ke bait tersebut</span>
+  <!-- Slanted Floating Banner -->
+  <div class="p5-ticker-wrapper">
+    <div class="p5-ticker-bar">
+      <div class="ticker-track">
+        <span>TAKE YOUR HEART</span>
+        <span class="star-sep">★</span>
+        <span>PROPOSAL DEFENSE CLEARED!</span>
+        <span class="star-sep">★</span>
+        <span>CONGRATULATIONS MUTHIA AFIFAH, S.S (SOON)</span>
+        <span class="star-sep">★</span>
+        <span>NEXT TARGET: FINAL THESIS & GRADUATION!</span>
+        <span class="star-sep">★</span>
+        <span>YOU'LL NEVER SEE IT COMING!</span>
+        <span class="star-sep">★</span>
+        <span>TAKE OVER!</span>
+        <span class="star-sep">★</span>
+        <span>TAKE YOUR HEART</span>
+        <span class="star-sep">★</span>
+        <span>PROPOSAL DEFENSE CLEARED!</span>
+        <span class="star-sep">★</span>
+        <span>CONGRATULATIONS MUTHIA AFIFAH, S.S (SOON)</span>
+        <span class="star-sep">★</span>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <div class="toast" id="toast-msg">Ucapan berhasil disalin ke clipboard! ✨</div>
+  <!-- Main Slides Deck Container -->
+  <main class="p5-main-container p5-slides-container" id="p5-slides-container">
 
-  <!-- Interactive Floating Heart Container -->
-  <div id="hearts-container"></div>
+    <!-- ============================================================== -->
+    <!-- SLIDE 1: HERO / PALACE INFILTRATION -->
+    <!-- ============================================================== -->
+    <div class="p5-slide active" data-slide="0" id="slide-0">
+      <section class="hero-section">
+        <div class="hero-burst-bg"></div>
 
-  <!-- Floating Interactive Cute Cat Companion Mascot -->
-  <aside class="cat-companion-wrapper" id="cat-companion" title="Sentuh / klik aku untuk semangat! 🐾">
-    <!-- Dynamic Motivational Speech Bubble -->
-    <div class="cat-speech-bubble" id="cat-speech">
-      <span class="bubble-text" id="cat-bubble-text">Hai! Sentuh aku atau buka suratnya yaa~ 🐾</span>
-      <span class="bubble-tail"></span>
+        <!-- Joker Character Cut-In Portrait -->
+        <div class="joker-hero-portrait-box">
+          <div class="joker-portrait-slant">
+            <img src="joker.jpg" alt="Joker Persona 5" class="joker-hero-img" />
+          </div>
+        </div>
+
+        <!-- Main Slanted Title -->
+        <div class="title-block">
+          <div class="cutout-badge alert-badge">PALACE INFILTRATION: SUCCESS!</div>
+          <h1 class="main-title">
+            <span class="title-chunk chunk-1">PROPOSAL</span>
+            <span class="title-chunk chunk-2">CONQUERED!</span>
+          </h1>
+          <div class="target-headline">
+            <span class="tag-label">CONGRATULATIONS TO:</span>
+            <div class="name-highlight-box" id="hero-display-name">
+              <span class="name-text" id="target-name-val">MUTHIA AFIFAH</span>
+              <span class="title-badge" id="target-degree-val">S.S (Soon)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- P5 Radial / Slanted Action Menu -->
+        <nav class="p5-action-menu" aria-label="Action Menu">
+          <button class="p5-btn btn-primary" id="btn-trigger-aoa" data-sfx="slash">
+            <span class="btn-inner">
+              <span class="btn-icon">⚡</span>
+              <span class="btn-text">ALL-OUT ATTACK!</span>
+              <span class="btn-sub">VICTORY FINISHER</span>
+            </span>
+          </button>
+
+          <button class="p5-btn btn-calling" id="btn-open-card" data-sfx="click">
+            <span class="btn-inner">
+              <span class="btn-icon">💌</span>
+              <span class="btn-text">CALLING CARD</span>
+              <span class="btn-sub">READ CHALLENGE LETTER</span>
+            </span>
+          </button>
+
+          <button class="p5-btn btn-confidant" id="btn-open-confidant" data-sfx="click">
+            <span class="btn-inner">
+              <span class="btn-icon">🃏</span>
+              <span class="btn-text">CONFIDANT STATUS</span>
+              <span class="btn-sub">RANK UP & STATS</span>
+            </span>
+          </button>
+
+          <button class="p5-btn btn-chat" id="btn-open-chat" data-sfx="click">
+            <span class="btn-inner">
+              <span class="btn-icon">💬</span>
+              <span class="btn-text">PHANTOM CHAT</span>
+              <span class="btn-sub">CREW TRANSMISSION</span>
+            </span>
+          </button>
+        </nav>
+      </section>
     </div>
 
-    <!-- Animated SVG Kitten Mascot -->
-    <div class="cat-avatar" id="cat-avatar">
-      <svg viewBox="0 0 160 160" class="cat-svg" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="cat-drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000000" flood-opacity="0.35"/>
-          </filter>
-          <radialGradient id="cat-white-grad" cx="45%" cy="35%" r="65%">
-            <stop offset="0%" stop-color="#ffffff"/>
-            <stop offset="85%" stop-color="#f8fafc"/>
-            <stop offset="100%" stop-color="#e2e8f0"/>
-          </radialGradient>
-          <radialGradient id="cat-pink-grad" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#fecdd3"/>
-            <stop offset="100%" stop-color="#fb7185"/>
-          </radialGradient>
-        </defs>
+    <!-- ============================================================== -->
+    <!-- SLIDE 2: THE CALLING CARD -->
+    <!-- ============================================================== -->
+    <div class="p5-slide" data-slide="1" id="slide-1">
+      <section class="p5-section calling-card-section" id="section-calling-card">
+        <div class="section-flag">
+          <span class="flag-icon">★</span>
+          <span class="flag-text">OFFICIAL CALLING CARD</span>
+          <span class="flag-stamp">PHANTOM THIEVES OF HEARTS</span>
+        </div>
 
-        <!-- Tail with wagging animation -->
-        <path class="cat-tail-anim" d="M112,122 C142,118 152,88 136,68 C126,56 136,46 142,50" 
-              fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round"/>
+        <div class="calling-card-container">
+          <div class="card-pin card-pin-tl"></div>
+          <div class="card-pin card-pin-tr"></div>
+          
+          <div class="card-paper-cutout">
+            <!-- Card Header Slanted Ribbon -->
+            <div class="card-header-ribbon">
+              <div class="ribbon-box black">MADAM</div>
+              <div class="ribbon-box red" id="card-target-box">MUTHIA AFIFAH</div>
+              <div class="ribbon-box white">RULER OF THE DEFENSE ROOM</div>
+            </div>
 
-        <!-- Chubby Body -->
-        <ellipse cx="80" cy="115" rx="42" ry="34" fill="url(#cat-white-grad)" filter="url(#cat-drop-shadow)"/>
+            <!-- Cutout Letters Collage Subheading -->
+            <div class="collage-subhead">
+              <span class="cl-letter l-b">E</span>
+              <span class="cl-letter l-w">X</span>
+              <span class="cl-letter l-r">A</span>
+              <span class="cl-letter l-y">M</span>
+              <span class="cl-letter l-b">I</span>
+              <span class="cl-letter l-w">N</span>
+              <span class="cl-letter l-r">E</span>
+              <span class="cl-letter l-y">R</span>
+              <span class="cl-letter l-b">S</span>
+              <span class="cl-space"></span>
+              <span class="cl-letter l-r">D</span>
+              <span class="cl-letter l-w">E</span>
+              <span class="cl-letter l-b">F</span>
+              <span class="cl-letter l-y">E</span>
+              <span class="cl-letter l-r">A</span>
+              <span class="cl-letter l-b">T</span>
+              <span class="cl-letter l-w">E</span>
+              <span class="cl-letter l-y">D</span>
+              <span class="cl-letter l-r">!</span>
+            </div>
 
-        <!-- Left Ear -->
-        <g class="cat-ear-l">
-          <polygon points="42,52 30,16 62,36" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-          <polygon points="42,48 35,24 57,36" fill="url(#cat-pink-grad)" opacity="0.85"/>
-        </g>
+            <!-- Card Body Content -->
+            <div class="card-body-text">
+              <p class="card-lead">
+                WE HAVE HEARD THAT RECENTLY YOU WERE SHADOWED BY FEAR OF 
+                <span class="kw-black">CHAPTERS 1 THROUGH 3</span>, CONVOLUTED METHODOLOGIES, 
+                AND THE PIERCING EYE CONTACT OF THE EXAMINERS IN THE DEFENSE ROOM.
+              </p>
 
-        <!-- Right Ear -->
-        <g class="cat-ear-r">
-          <polygon points="118,52 130,16 98,36" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-          <polygon points="118,48 125,24 103,36" fill="url(#cat-pink-grad)" opacity="0.85"/>
-        </g>
+              <p class="card-para">
+                Yet on this historic day, you demonstrated your unbreakable steel will! 
+                You presented your research problem without flinching, defended your arguments 
+                with fierce tenacity, and officially <strong>DECLARED TOTAL VICTORY</strong> in your Proposal Defense!
+              </p>
 
-        <!-- Head -->
-        <ellipse class="cat-head-elem" cx="80" cy="68" rx="48" ry="40" fill="url(#cat-white-grad)" filter="url(#cat-drop-shadow)"/>
+              <div class="crime-box">
+                <div class="crime-title">HEINOUS CRIMES YOU HAVE COMMITTED:</div>
+                <ul class="crime-list">
+                  <li>Relentlessly staying up late drafting your proposal until losing all track of time.</li>
+                  <li>Elegantly fielding and dismantling every trick question from the examination committee.</li>
+                  <li>Making all your friends intensely proud of your monumental victory today!</li>
+                </ul>
+              </div>
 
-        <!-- Cheeks Blush -->
-        <ellipse cx="48" cy="78" rx="10" ry="6" fill="#fca5a5" opacity="0.65"/>
-        <ellipse cx="112" cy="78" rx="10" ry="6" fill="#fca5a5" opacity="0.65"/>
+              <p class="card-threat">
+                Therefore, we <strong>THE PHANTOM THIEVES OF HEARTS</strong> have resolved to 
+                <span class="kw-red">STEAL AWAY</span> all the exhaustion, anxiety, and overthinking from within your chest! 
+                In return, we leave behind a burning determination to conquer every revision and escort you straight 
+                to the gates of <strong>GRADUATION & YOUR BACHELOR'S DEGREE</strong>!
+              </p>
 
-        <!-- Whiskers -->
-        <g stroke="#94a3b8" stroke-width="2" stroke-linecap="round" opacity="0.8">
-          <line x1="28" y1="73" x2="46" y2="75"/>
-          <line x1="26" y1="81" x2="45" y2="80"/>
-          <line x1="132" y1="73" x2="114" y2="75"/>
-          <line x1="134" y1="81" x2="115" y2="80"/>
-        </g>
+              <!-- Signature & Seal -->
+              <div class="card-footer-box">
+                <div class="wax-seal">
+                  <div class="seal-inner">
+                    <span>P5</span>
+                    <small>VERIFIED</small>
+                  </div>
+                </div>
+                <div class="signature-block">
+                  <div class="sig-line">FROM:</div>
+                  <div class="sig-name">THE PHANTOM THIEVES OF HEARTS</div>
+                  <div class="sig-note">"Take your time, but never stop fighting!"</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <!-- Blinking Eyes -->
-        <g class="cat-eyes-group">
-          <!-- Left Eye -->
-          <ellipse cx="58" cy="66" rx="8" ry="10" fill="#1e1b4b"/>
-          <circle cx="55" cy="63" r="3.5" fill="#ffffff"/>
-          <circle cx="61" cy="70" r="1.8" fill="#ffffff"/>
+        <div class="slide-footer-nav">
+          <button class="p5-btn btn-slide-advance" data-next-slide="2" data-sfx="click">
+            <span>NEXT: CONFIDANT PROGRESSION ▶</span>
+          </button>
+        </div>
+      </section>
+    </div>
 
-          <!-- Right Eye -->
-          <ellipse cx="102" cy="66" rx="8" ry="10" fill="#1e1b4b"/>
-          <circle cx="99" cy="63" r="3.5" fill="#ffffff"/>
-          <circle cx="105" cy="70" r="1.8" fill="#ffffff"/>
-        </g>
+    <!-- ============================================================== -->
+    <!-- SLIDE 3: CONFIDANT RANK UP -->
+    <!-- ============================================================== -->
+    <div class="p5-slide" data-slide="2" id="slide-2">
+      <section class="p5-section confidant-section" id="section-confidant">
+        <div class="section-flag red">
+          <span class="flag-icon">★</span>
+          <span class="flag-text">CONFIDANT PROGRESSION</span>
+          <span class="flag-stamp">RANK UP SCREEN</span>
+        </div>
 
-        <!-- Tiny Pink Nose -->
-        <polygon points="80,75 75,71 85,71" fill="#f43f5e"/>
+        <div class="confidant-card-grid">
+          <!-- Main Confidant Tarot Card -->
+          <div class="tarot-card-wrapper">
+            <div class="tarot-card">
+              <div class="tarot-inner">
+                <div class="tarot-header">
+                  <span class="roman-num">XXI</span>
+                  <span class="arcana-name">THE SCHOLAR</span>
+                </div>
+                <div class="tarot-art">
+                  <div class="art-backdrop"></div>
+                  <div class="academic-cap-svg">
+                    <!-- Graduation / Scholar Icon SVG -->
+                    <svg viewBox="0 0 100 100" class="cap-svg" fill="currentColor">
+                      <polygon points="50,15 95,35 50,55 5,35" fill="#e60012" stroke="#ffffff" stroke-width="2"/>
+                      <polygon points="50,55 85,40 85,60 50,75 15,60 15,40" fill="#111111" stroke="#ffffff" stroke-width="2"/>
+                      <line x1="85" y1="40" x2="90" y2="70" stroke="#ffe600" stroke-width="3"/>
+                      <circle cx="90" cy="73" r="4" fill="#ffe600"/>
+                      <polygon points="50,22 80,35 50,48 20,35" fill="#ffffff" opacity="0.25"/>
+                    </svg>
+                  </div>
+                  <div class="tarot-stars">★★★★★</div>
+                </div>
+                <div class="tarot-footer">
+                  <div class="rank-status-pill">
+                    <span class="r-txt">RANK</span>
+                    <span class="r-val">MAX (DEFENSE CLEARED)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <!-- Cat Mouth :3 -->
-        <path d="M74,77 Q80,82 80,77 Q80,82 86,77" fill="none" stroke="#334155" stroke-width="2.2" stroke-linecap="round"/>
+          <!-- Confidant Stats & Abilities -->
+          <div class="confidant-info-panel">
+            <div class="rank-up-banner">
+              <span class="banner-sub">COOPERATION ESTABLISHED</span>
+              <h2 class="banner-title">CONFIDANT: RANK UP!</h2>
+              <div class="target-meta-tag">
+                <span>HOLDER: </span>
+                <strong id="confidant-target-name">MUTHIA AFIFAH, S.S (Soon)</strong>
+              </div>
+            </div>
 
-        <!-- Red Ribbon Collar & Bell -->
-        <path d="M58,95 Q80,105 102,95" fill="none" stroke="#f43f5e" stroke-width="6" stroke-linecap="round"/>
-        <circle cx="80" cy="101" r="5.5" fill="#fbbf24" stroke="#d97706" stroke-width="1.2"/>
+            <!-- Attributes Bars -->
+            <div class="p5-stats-container">
+              <div class="stat-row">
+                <div class="stat-name">PROPOSAL MATERIAL MASTERY</div>
+                <div class="stat-bar-track">
+                  <div class="stat-bar-fill fill-100">
+                    <span class="bar-val">100% (MAX)</span>
+                  </div>
+                </div>
+              </div>
 
-        <!-- Left Paw -->
-        <ellipse cx="58" cy="132" rx="13" ry="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-        <circle cx="58" cy="133" r="4" fill="#fca5a5" opacity="0.6"/>
+              <div class="stat-row">
+                <div class="stat-name">EXAMINER RESILIENCE</div>
+                <div class="stat-bar-track">
+                  <div class="stat-bar-fill fill-100">
+                    <span class="bar-val">UNBREAKABLE</span>
+                  </div>
+                </div>
+              </div>
 
-        <!-- Right Waving Paw -->
-        <g class="cat-waving-paw">
-          <ellipse cx="102" cy="126" rx="13" ry="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
-          <circle cx="102" cy="127" r="4" fill="#fca5a5" opacity="0.6"/>
-        </g>
-      </svg>
+              <div class="stat-row">
+                <div class="stat-name">REVISION READINESS</div>
+                <div class="stat-bar-track">
+                  <div class="stat-bar-fill fill-85">
+                    <span class="bar-val">85% (BURNING)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="stat-row">
+                <div class="stat-name">PROGRESS TO GRADUATION</div>
+                <div class="stat-bar-track">
+                  <div class="stat-bar-fill fill-70">
+                    <span class="bar-val">70% (ALMOST THERE!)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Unlocked Skill -->
+            <div class="unlocked-skill-box">
+              <div class="skill-badge">NEW ABILITY UNLOCKED!</div>
+              <div class="skill-name">⚡ CHAPTERS 4 & 5 CONQUEROR</div>
+              <p class="skill-desc">
+                Increases resilience against revision remarks by <strong>+200%</strong>, 
+                grants absolute immunity to writer's block, and triggers critical hits during final thesis work!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer-nav">
+          <button class="p5-btn btn-slide-advance" data-next-slide="3" data-sfx="click">
+            <span>NEXT: PHANTOM CHAT TRANSMISSION ▶</span>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- SLIDE 4: PHANTOM THIEVES DIALOGUE / CHAT -->
+    <!-- ============================================================== -->
+    <div class="p5-slide" data-slide="3" id="slide-3">
+      <section class="p5-section chat-section" id="section-chat">
+        <div class="section-flag yellow">
+          <span class="flag-icon">★</span>
+          <span class="flag-text">METAVERSE TRANSMISSION</span>
+          <span class="flag-stamp">PHANTOM CHATROOM</span>
+        </div>
+
+        <div class="p5-dialogue-wrapper">
+          <div class="dialogue-box-container">
+            <!-- Character Portrait Box -->
+            <div class="speaker-avatar-frame">
+              <div class="avatar-backdrop" id="avatar-backdrop"></div>
+              <div class="avatar-art" id="avatar-art">
+                <!-- Dynamically populated character portrait -->
+                <img src="morgana.jpg" alt="MORGANA" class="speaker-portrait-img" id="speaker-portrait" />
+              </div>
+              <div class="speaker-tag" id="speaker-tag">MORGANA</div>
+            </div>
+
+            <!-- Speech Content -->
+            <div class="dialogue-content-box">
+              <div class="dialogue-location">LOCATION: VELVET ROOM // CHAT LINE</div>
+              <div class="dialogue-text-wrapper">
+                <p class="dialogue-text" id="dialogue-text">
+                  "Looking cool, <span class="d-target">Muthia</span>! The examination committee was completely captivated by your presentation today!"
+                </p>
+              </div>
+
+              <!-- Dialogue Controls -->
+              <div class="dialogue-controls">
+                <div class="msg-counter" id="msg-counter">1 / 5</div>
+                <div class="nav-buttons">
+                  <button class="p5-mini-btn" id="btn-prev-dialogue" disabled>◀ PREV</button>
+                  <button class="p5-mini-btn primary" id="btn-next-dialogue">NEXT ▶</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Member Selector Bar -->
+          <div class="thieves-selector-bar">
+            <button class="thief-btn active" data-index="0" title="Morgana">
+              <span class="thief-avatar-mini"><img src="morgana.jpg" alt="Morgana" /></span>
+              <span class="t-name">MORGANA</span>
+            </button>
+            <button class="thief-btn" data-index="1" title="Ryuji">
+              <span class="thief-avatar-mini"><img src="ryuji.jpg" alt="Ryuji" /></span>
+              <span class="t-name">RYUJI</span>
+            </button>
+            <button class="thief-btn" data-index="2" title="Makoto">
+              <span class="thief-avatar-mini"><img src="makoto.jpg" alt="Makoto" /></span>
+              <span class="t-name">MAKOTO</span>
+            </button>
+            <button class="thief-btn" data-index="3" title="Futaba">
+              <span class="thief-avatar-mini"><img src="futaba.jpg" alt="Futaba" /></span>
+              <span class="t-name">FUTABA</span>
+            </button>
+            <button class="thief-btn" data-index="4" title="Joker">
+              <span class="thief-avatar-mini"><img src="joker.jpg" alt="Joker" /></span>
+              <span class="t-name">JOKER</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="slide-footer-nav">
+          <button class="p5-btn btn-slide-advance" data-next-slide="4" data-sfx="click">
+            <span>NEXT: CONQUERING REVISIONS GUIDE ▶</span>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- SLIDE 5: MOTIVATION & FINALE -->
+    <!-- ============================================================== -->
+    <div class="p5-slide" data-slide="4" id="slide-4">
+      <section class="p5-section tips-section">
+        <div class="section-flag black">
+          <span class="flag-icon">★</span>
+          <span class="flag-text">STRATEGY GUIDE</span>
+          <span class="flag-stamp">CONQUERING REVISIONS</span>
+        </div>
+
+        <div class="tips-grid">
+          <div class="tip-card card-slant-1">
+            <div class="tip-num">01</div>
+            <h3 class="tip-title">SELF-REWARD FIRST!</h3>
+            <p class="tip-desc">
+              The proposal defense is tough and you conquered it! Today you must get plenty of rest, 
+              enjoy your favorite meals, or binge games completely guilt-free.
+            </p>
+          </div>
+
+          <div class="tip-card card-slant-2">
+            <div class="tip-num">02</div>
+            <h3 class="tip-title">LOG ALL EXAMINER NOTES</h3>
+            <p class="tip-desc">
+              Revisions aren't a sign of failure—they're cheat codes to make your thesis flawless! 
+              Gather all examiner notes, sorting what's quick versus what needs consultation.
+            </p>
+          </div>
+
+          <div class="tip-card card-slant-3">
+            <div class="tip-num">03</div>
+            <h3 class="tip-title">TACKLE REVISIONS EARLY</h3>
+            <p class="tip-desc">
+              The sooner revisions are wrapped up, the faster you collect research data. 
+              Remember: the best thesis is a finished thesis!
+            </p>
+          </div>
+
+          <div class="tip-card card-slant-4">
+            <div class="tip-num">04</div>
+            <h3 class="tip-title">GRADUATION AWAITS</h3>
+            <p class="tip-desc">
+              You are well past the halfway mark of your degree. Don't let up on the final stretch; 
+              all our best thoughts and cheers accompany you toward the finish line!
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer-nav finale-nav">
+          <button class="p5-btn btn-slide-advance btn-primary" id="btn-slide-trigger-aoa" data-sfx="slash">
+            <span>⚡ UNLEASH ALL-OUT ATTACK FINISHER! ⚡</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- P5 FOOTER -->
+      <footer class="p5-footer">
+        <div class="footer-slanted-bg"></div>
+        <div class="footer-content">
+          <div class="footer-brand">
+            <span class="f-star">★</span>
+            <span class="f-text">PERSONA 5 ACADEMIC PALACE INFILTRATION // SPECIAL EDITION</span>
+            <span class="f-star">★</span>
+          </div>
+          <p class="footer-sub">
+            Dedicated with high spirit to our champion: <strong id="footer-target-name">Muthia Afifah, S.S (Soon)</strong>. 
+            You'll never see it coming!
+          </p>
+        </div>
+      </footer>
+    </div>
+
+  </main>
+
+  <!-- ============================================================== -->
+  <!-- PERSONA 5 SLIDE CONTROLLER DOCK (STICKY BOTTOM DOCK) -->
+  <!-- ============================================================== -->
+  <nav class="p5-slide-dock" id="slide-dock" aria-label="Slide Deck Navigation">
+    <div class="dock-container">
+      <!-- Prev Button -->
+      <button class="dock-btn dock-prev" id="dock-btn-prev" aria-label="Previous Slide" title="Previous Slide (← / Q)">
+        <span class="dock-btn-inner">◀ PREV</span>
+      </button>
+
+      <!-- Slide Indicator Pills -->
+      <div class="dock-pills" id="dock-pills" role="tablist">
+        <button class="dock-pill active" data-goto="0" role="tab" aria-selected="true">
+          <span class="pill-idx">01</span>
+          <span class="pill-label">MISSION</span>
+        </button>
+        <button class="dock-pill" data-goto="1" role="tab" aria-selected="false">
+          <span class="pill-idx">02</span>
+          <span class="pill-label">CALLING CARD</span>
+        </button>
+        <button class="dock-pill" data-goto="2" role="tab" aria-selected="false">
+          <span class="pill-idx">03</span>
+          <span class="pill-label">CONFIDANT</span>
+        </button>
+        <button class="dock-pill" data-goto="3" role="tab" aria-selected="false">
+          <span class="pill-idx">04</span>
+          <span class="pill-label">CHAT</span>
+        </button>
+        <button class="dock-pill" data-goto="4" role="tab" aria-selected="false">
+          <span class="pill-idx">05</span>
+          <span class="pill-label">STRATEGY</span>
+        </button>
+      </div>
+
+      <!-- Slide Number Counter -->
+      <div class="dock-counter">
+        <span class="counter-num" id="dock-curr-idx">01</span>
+        <span class="counter-slash">/</span>
+        <span class="counter-total">05</span>
+      </div>
+
+      <!-- Next Button -->
+      <button class="dock-btn dock-next" id="dock-btn-next" aria-label="Next Slide" title="Next Slide (→ / E / Space)">
+        <span class="dock-btn-inner">NEXT ▶</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: ALL-OUT ATTACK (AOA) FINISHER FULLSCREEN TAKEOVER -->
+  <!-- ============================================================== -->
+  <div class="aoa-modal" id="aoa-modal" role="dialog" aria-hidden="true">
+    <!-- Quick Corner Close Button -->
+    <button class="aoa-corner-close" id="btn-corner-close-aoa" aria-label="Close All-Out Attack Finisher" title="Close (ESC)">
+      <span class="corner-close-icon">✖</span>
+      <span class="corner-close-text">CLOSE [ESC]</span>
+    </button>
+
+    <!-- Dynamic Full-Screen Manga Speedlines Background -->
+    <div class="aoa-speedlines"></div>
+
+    <!-- Screen Glass Shatter & Slashes -->
+    <div class="aoa-shatter-lines"></div>
+    <div class="aoa-slash-red"></div>
+    <div class="aoa-slash-black"></div>
+    <div class="aoa-slash-white"></div>
+
+    <!-- Canvas for AOA Starburst Confetti -->
+    <canvas id="aoa-confetti-canvas"></canvas>
+
+    <!-- Main All-Out Attack Artwork & Typography -->
+    <div class="aoa-stage">
+      <!-- Joker Face All-Out Attack Cut-In -->
+      <div class="aoa-joker-cutin">
+        <img src="joker.jpg" alt="Joker All-Out Attack" class="aoa-joker-face" />
+        <div class="aoa-cutin-tag">JOKER // FINISH</div>
+      </div>
+
+      <!-- Comic Cutout Badges & Typography -->
+      <div class="aoa-text-container">
+        <div class="aoa-badge-top">
+          <span class="aoa-pill">THE SHOW'S NOT OVER...</span>
+          <span class="aoa-pill red">BUT THE DEFENSE IS SLAYED!</span>
+        </div>
+
+        <h2 class="aoa-hero-title">
+          <span class="aoa-word-1">PROPOSAL</span>
+          <span class="aoa-word-2">COMPLETED!</span>
+        </h2>
+
+        <div class="aoa-quote-box">
+          <p class="aoa-quote-text">
+            "THE EXAMINING COMMITTEE HAS BEEN DEFEATED. THE DEFENSE CHAMBER HAS FALLEN!"
+          </p>
+          <div class="aoa-recipient-banner">
+            <span class="aoa-hero-name" id="aoa-target-name">MUTHIA AFIFAH</span>
+            <span class="aoa-hero-title-tag" id="aoa-target-degree">S.S (Soon)</span>
+          </div>
+        </div>
+
+        <!-- AOA Bottom Control Buttons -->
+        <div class="aoa-actions">
+          <button class="p5-btn aoa-btn-replay" id="btn-replay-aoa">
+            <span>⚡ REPLAY FINISHER</span>
+          </button>
+          <button class="p5-btn aoa-btn-close" id="btn-close-aoa">
+            <span>✖ RETURN TO PALACE</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- FLOATING JOKER COMPANION (BOTTOM RIGHT) -->
+  <!-- ============================================================== -->
+  <aside class="joker-floating-companion" id="joker-companion" aria-label="Joker Companion">
+    <div class="joker-speech-bubble" id="joker-speech" title="Click to hear another message!">
+      <div class="speech-text" id="joker-speech-text">
+        Hey Muthia! Tap me or open the calling card~ 🃏✨
+      </div>
+      <div class="speech-tail"></div>
+    </div>
+    <div class="joker-companion-avatar" id="joker-avatar-btn" title="Tap Joker!">
+      <img src="joker chibi.png" alt="Joker Companion" class="joker-companion-img" />
     </div>
   </aside>
 
