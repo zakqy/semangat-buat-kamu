@@ -11,7 +11,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Permanent+Marker&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=3.3" />
+  <style>
+    /* Prevent any cached audio-unlock-banner from rendering */
+    .p5-audio-unlock-banner, #audio-unlock-banner {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+    }
+  </style>
 </head>
 <body class="p5-theme">
 
@@ -25,65 +34,58 @@
   <div class="halftone-overlay"></div>
   <div class="vignette-overlay"></div>
 
-  <!-- Floating BGM Autoplay Unlock Prompt (Auto-hides as soon as audio plays) -->
-  <div class="p5-audio-unlock-banner" id="audio-unlock-banner" title="Klik di mana saja untuk memutar musik">
-    <span class="unlock-icon">🎵</span>
-    <span class="unlock-text">KLIK DI MANA SAJA UNTUK MEMULAI MUSIK</span>
-    <span class="unlock-track">"School Days"</span>
-  </div>
-
-  <!-- P5 Navigation Top Bar -->
-  <header class="p5-header">
-    <div class="nav-left">
-      <div class="metaverse-badge">
-        <span class="meta-dot"></span>
-        <span class="meta-text">METAVERSE NAVIGATOR: <strong>ACTIVE</strong></span>
+  <!-- ============================================================== -->
+  <!-- PERSONA 5 UNIFIED TOP NAVIGATION & TICKER HEADER -->
+  <!-- ============================================================== -->
+  <header class="p5-header" id="p5-header">
+    <div class="header-top-row">
+      <!-- Left: Metaverse Mission Status -->
+      <div class="nav-left">
+        <div class="metaverse-badge">
+          <span class="meta-dot"></span>
+          <span class="meta-label">METAVERSE NAVIGATOR:</span>
+          <span class="meta-mission-tag">PROPOSAL CLEARED 🏆</span>
+        </div>
       </div>
-      <div class="p5-date-box" id="p5-current-date">
-        <span class="cal-label">MISSION:</span>
-        <span class="cal-val">PROPOSAL DEFENSE INFILTRATION</span>
-      </div>
-    </div>
 
-    <!-- BGM Music Controller -->
-    <div class="nav-right">
-      <button class="p5-nav-btn audio-btn" id="btn-toggle-bgm" aria-label="Toggle Background Music" title="Toggle BGM (School Days)">
-        <span class="btn-skew-box">
-          <span class="btn-icon" id="bgm-icon">🎵</span>
-          <span class="btn-label" id="bgm-label">BGM: ON</span>
-          <span class="audio-bars">
-            <i></i><i></i><i></i>
+      <!-- Right: BGM Music Controller -->
+      <div class="nav-right">
+        <button class="p5-nav-btn audio-btn" id="btn-toggle-bgm" aria-label="Toggle Background Music" title="Toggle BGM (School Days)">
+          <span class="btn-skew-box">
+            <span class="btn-icon" id="bgm-icon">🎵</span>
+            <span class="btn-label" id="bgm-label">BGM: ON</span>
+            <span class="audio-bars">
+              <i></i><i></i><i></i>
+            </span>
           </span>
-        </span>
-      </button>
+        </button>
+      </div>
     </div>
-  </header>
 
-  <!-- Slanted Floating Banner -->
-  <div class="p5-ticker-wrapper">
-    <div class="p5-ticker-bar">
+    <!-- Integrated Clean Marquee Ticker Strip -->
+    <div class="header-ticker-strip">
       <div class="ticker-track">
-        <span>TAKE YOUR HEART</span>
+        <span>★ PROPOSAL DEFENSE CLEARED!</span>
         <span class="star-sep">★</span>
-        <span>PROPOSAL DEFENSE CLEARED!</span>
-        <span class="star-sep">★</span>
-        <span>CONGRATULATIONS MUTHIA AFIFAH, S.S (SOON)</span>
+        <span>CONGRATULATIONS MUTHIA AFIFAH, S.S. (SOON)</span>
         <span class="star-sep">★</span>
         <span>NEXT TARGET: FINAL THESIS & GRADUATION!</span>
         <span class="star-sep">★</span>
+        <span>TAKE YOUR HEART</span>
+        <span class="star-sep">★</span>
         <span>YOU'LL NEVER SEE IT COMING!</span>
         <span class="star-sep">★</span>
-        <span>TAKE OVER!</span>
+        <span>★ PROPOSAL DEFENSE CLEARED!</span>
+        <span class="star-sep">★</span>
+        <span>CONGRATULATIONS MUTHIA AFIFAH, S.S. (SOON)</span>
+        <span class="star-sep">★</span>
+        <span>NEXT TARGET: FINAL THESIS & GRADUATION!</span>
         <span class="star-sep">★</span>
         <span>TAKE YOUR HEART</span>
         <span class="star-sep">★</span>
-        <span>PROPOSAL DEFENSE CLEARED!</span>
-        <span class="star-sep">★</span>
-        <span>CONGRATULATIONS MUTHIA AFIFAH, S.S (SOON)</span>
-        <span class="star-sep">★</span>
       </div>
     </div>
-  </div>
+  </header>
 
   <!-- Main Slides Deck Container -->
   <main class="p5-main-container p5-slides-container" id="p5-slides-container">
@@ -113,7 +115,7 @@
             <span class="tag-label">CONGRATULATIONS TO:</span>
             <div class="name-highlight-box" id="hero-display-name">
               <span class="name-text" id="target-name-val">MUTHIA AFIFAH</span>
-              <span class="title-badge" id="target-degree-val">S.S (Soon)</span>
+              <span class="title-badge" id="target-degree-val">S.S. (Soon)</span>
             </div>
           </div>
         </div>
@@ -308,7 +310,7 @@
               <h2 class="banner-title">CONFIDANT: RANK UP!</h2>
               <div class="target-meta-tag">
                 <span>HOLDER: </span>
-                <strong id="confidant-target-name">MUTHIA AFIFAH, S.S (Soon)</strong>
+                <strong id="confidant-target-name">MUTHIA AFIFAH, S.S. (Soon)</strong>
               </div>
             </div>
 
@@ -496,6 +498,187 @@
           </div>
         </div>
 
+        <div class="slide-footer-nav">
+          <button class="p5-btn btn-slide-advance" data-next-slide="5" data-sfx="click">
+            <span>NEXT: SPECIAL LETTER FROM YUZARE 💌▶</span>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- SLIDE 6: SPECIAL LETTER FROM YUZARE & PRAYERS -->
+    <!-- ============================================================== -->
+    <div class="p5-slide" data-slide="5" id="slide-5">
+      <section class="p5-section letter-section" id="section-letter">
+        <div class="section-flag red">
+          <span class="flag-icon">★</span>
+          <span class="flag-text">A MESSAGE JUST FOR YOU</span>
+          <span class="flag-stamp">SPECIAL LETTER FROM YUZARE</span>
+        </div>
+
+        <div class="yuzare-letter-wrapper">
+          <div class="letter-outer-frame">
+            <div class="letter-stamp-corner">
+              <span class="stamp-p5">CONFIDANT // MAX</span>
+              <span class="stamp-date">SEMPRO VICTORY EDITION</span>
+            </div>
+
+            <!-- Letter Paper Container -->
+            <article class="letter-paper">
+              <!-- Slanted Greeting Ribbon -->
+              <div class="letter-head-ribbons">
+                <span class="ribbon-tag black">SPESIAL UNTUK:</span>
+                <span class="ribbon-tag red" id="letter-target-name">MUTHIA AFIFAH, S.S. (SOON)</span>
+                <span class="ribbon-tag white">DARI: YUZARE 💌</span>
+              </div>
+
+              <div class="letter-title-block">
+                <h2 class="letter-main-title">
+                  <span class="title-highlight">SELAMAT YA, MUTHIA!</span>
+                  <span class="title-sub">SATU TAHAP BESAR TELAH KAMU TAKLUKKAN DENGAN LUAR BIASA ✨</span>
+                </h2>
+              </div>
+
+              <!-- Letter Body Content -->
+              <div class="letter-body-prose">
+                <p class="letter-p lead-p">
+                  Muthiaaaa Selamat ya atas seminar proposalnya hari ini! 🎉
+                  Akhirnya satu tahap penting berhasil kamu lewati. Semoga proses selanjutnya dilancarkan dan kamu bisa terus memberikan yang terbaik sampai nanti selesai.
+                  Good job, Muthia!
+                </p>
+
+                <p class="letter-p">
+                  Aku tahu sampai di titik ini pasti nggak selalu mudah. Ada banyak hal yang harus kamu lewati, mulai dari menyusun Bab 1 sampai Bab 3,
+                  revisi, sampai rasa bingung dan capek selama prosesnya. Tapi, lihat deh, sekarang kamu berhasil melewati satu tahap penting. Semua usaha dan waktu yang sudah kamu luangkan akhirnya membawamu sampai di sini.
+                  You did a great job, Muthia! Semoga tahap selanjutnya juga berjalan lancar, ya.
+                </p>
+
+                <p class="letter-p highlight-p">
+                  Setelah hari ini, jangan lupa beri apresiasi besar untuk dirimu sendiri ya. 
+                  Istirahatkan fisik dan pikiranmu, nikmati makanan favorit, dan rayakan kemenangan yang sangat berarti ini tanpa beban!
+                </p>
+              </div>
+
+              <!-- Closing Note & Signature Block -->
+              <div class="letter-sign-footer">
+                <div class="yuzare-wax-seal">
+                  <div class="seal-ring">
+                    <span class="seal-monogram">Y</span>
+                    <span class="seal-caption">YUZARE // CONFIDANT</span>
+                  </div>
+                </div>
+
+                <div class="sign-text-group">
+                  <div class="sign-salutation">Wishing You All the Best!✨</div>
+                  <div class="sign-author">Yuzare ✍️</div>
+                  <div class="sign-motto">"Tetap percaya pada dirimu yaa, Muthia. Satu gerbang sudah kamu lewati, dan aku yakin kamu sanggup menuntaskan semuanya sampai toga tersemat indah di kepalamu!"</div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="slide-footer-nav">
+          <button class="p5-btn btn-slide-advance" data-next-slide="6" data-sfx="click">
+            <span>NEXT: DOA &amp; HARAPAN BAIK DARI YUZARE 🤲▶</span>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- SLIDE 7: DOA DARI YUZARE & AMINKAN BERSAMA -->
+    <!-- ============================================================== -->
+    <div class="p5-slide" data-slide="6" id="slide-6">
+      <section class="p5-section prayer-section" id="section-prayer">
+        <div class="section-flag black">
+          <span class="flag-icon">🤲</span>
+          <span class="flag-text">PRAYERS &amp; BLESSINGS</span>
+          <span class="flag-stamp">DOA TULUS DARI YUZARE</span>
+        </div>
+
+        <div class="yuzare-prayer-slide-wrapper">
+          <div class="prayer-outer-frame">
+            <div class="prayer-stamp-corner">
+              <span class="stamp-p5">BLESSING // P5</span>
+              <span class="stamp-date">FOR MUTHIA AFIFAH, S.S.</span>
+            </div>
+
+            <!-- Special Prayer / Harapan Standalone Container -->
+            <div class="yuzare-prayer-box standalone-prayer-box">
+              <div class="prayer-box-heading">
+                <span class="pb-icon">🤲</span>
+                <div class="pb-texts">
+                  <span class="pb-title">DOA DARI YUZARE</span>
+                  <span class="pb-subtitle">Untuk setiap langkah dan perjalanan Muthia ke depannya</span>
+                </div>
+              </div>
+
+              <div class="prayers-collection">
+                <div class="prayer-card p-card-1">
+                  <div class="prayer-icon-badge">📘</div>
+                  <div class="prayer-content">
+                    <h4 class="prayer-tit">KELANCARAN REVISI &amp; BAB LANJUTAN</h4>
+                    <p class="prayer-txt">
+                      Semoga setiap catatan revisi dari penguji bisa dipahami dan dibereskan dengan mudah. 
+                      Diberikan kelancaran saat bimbingan, dosen yang selalu pengertian dan suportif, 
+                      serta inspirasi yang terus mengalir deras dalam menyusun Bab 4 dan Bab 5 nanti.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="prayer-card p-card-2">
+                  <div class="prayer-icon-badge">🤍</div>
+                  <div class="prayer-content">
+                    <h4 class="prayer-tit">KESEHATAN, HATI YANG LAPANG &amp; ENERGI POSITIF</h4>
+                    <p class="prayer-txt">
+                      Semoga kamu selalu diberikan kesehatan fisik dan mental yang prima. 
+                      Dijauhkan dari rasa lelah berlebih, disingkirkan dari segala kecemasan yang memberatkan, 
+                      dan hatimu senantiasa dipenuhi ketenangan, kebahagiaan, serta semangat baru setiap harinya.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="prayer-card p-card-3">
+                  <div class="prayer-icon-badge">🎓</div>
+                  <div class="prayer-content">
+                    <h4 class="prayer-tit">GELAR S.S. &amp; HARI WISUDA IMPIAN</h4>
+                    <p class="prayer-txt">
+                      Semoga jalan menuju Sidang Skripsi (Munaqasyah) dimudahkan dan dipercepat tanpa hambatan yang berarti. 
+                      Hingga hari bahagia wisuda tiba, resmi menyandang gelar <strong>Sarjana Sastra (S.S.)</strong> 
+                      dengan predikat terbaik yang membanggakan dirimu dan orang tua tercinta.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="prayer-card p-card-4">
+                  <div class="prayer-icon-badge">🌟</div>
+                  <div class="prayer-content">
+                    <h4 class="prayer-tit">MASA DEPAN BERKAH &amp; PINTU REZEKI TERBUKA</h4>
+                    <p class="prayer-txt">
+                      Semoga setelah lulus nanti, semua cita-cita, karir impian, dan rencana baik yang kamu impikan 
+                      diberikan jalan yang lapang, dilancarkan rezekinya, dan didekatkan dengan segala hal-hal baik yang berkah.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Aamiin Button -->
+              <div class="prayer-action-container">
+                <button class="p5-btn btn-aamiin-letter" id="btn-aamiin-doa" data-sfx="confidant" title="Klik untuk mengaminkan untaian doa ini">
+                  <span class="btn-inner aamiin-inner">
+                    <span class="aamiin-hands">🤲</span>
+                    <span class="aamiin-text">AAMIINKAN DOA</span>
+                    <span class="aamiin-badge" id="aamiin-counter">0 Aamiin</span>
+                  </span>
+                </button>
+                <p class="aamiin-hint" id="aamiin-toast">Sentuh tombol untuk bersama-sama mengaminkan doa baik ini! ✨</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="slide-footer-nav finale-nav">
           <button class="p5-btn btn-slide-advance btn-primary" id="btn-slide-trigger-aoa" data-sfx="slash">
             <span>⚡ UNLEASH ALL-OUT ATTACK FINISHER! ⚡</span>
@@ -513,7 +696,7 @@
             <span class="f-star">★</span>
           </div>
           <p class="footer-sub">
-            Dedicated with high spirit to our champion: <strong id="footer-target-name">Muthia Afifah, S.S (Soon)</strong>. 
+            Dedicated with high spirit to our champion: <strong id="footer-target-name">Muthia Afifah, S.S. (Soon)</strong>. 
             You'll never see it coming!
           </p>
         </div>
@@ -534,25 +717,33 @@
 
       <!-- Slide Indicator Pills -->
       <div class="dock-pills" id="dock-pills" role="tablist">
-        <button class="dock-pill active" data-goto="0" role="tab" aria-selected="true">
+        <button class="dock-pill active" data-goto="0" role="tab" aria-selected="true" title="Slide 01: Mission Clear">
           <span class="pill-idx">01</span>
           <span class="pill-label">MISSION</span>
         </button>
-        <button class="dock-pill" data-goto="1" role="tab" aria-selected="false">
+        <button class="dock-pill" data-goto="1" role="tab" aria-selected="false" title="Slide 02: Calling Card">
           <span class="pill-idx">02</span>
-          <span class="pill-label">CALLING CARD</span>
+          <span class="pill-label"><span class="desk-word">CALLING </span>CARD</span>
         </button>
-        <button class="dock-pill" data-goto="2" role="tab" aria-selected="false">
+        <button class="dock-pill" data-goto="2" role="tab" aria-selected="false" title="Slide 03: Confidant Rank Up">
           <span class="pill-idx">03</span>
           <span class="pill-label">CONFIDANT</span>
         </button>
-        <button class="dock-pill" data-goto="3" role="tab" aria-selected="false">
+        <button class="dock-pill" data-goto="3" role="tab" aria-selected="false" title="Slide 04: Metaverse Transmission">
           <span class="pill-idx">04</span>
           <span class="pill-label">CHAT</span>
         </button>
-        <button class="dock-pill" data-goto="4" role="tab" aria-selected="false">
+        <button class="dock-pill" data-goto="4" role="tab" aria-selected="false" title="Slide 05: Strategy Guide">
           <span class="pill-idx">05</span>
           <span class="pill-label">STRATEGY</span>
+        </button>
+        <button class="dock-pill" data-goto="5" role="tab" aria-selected="false" title="Slide 06: Special Letter from Yuzare">
+          <span class="pill-idx">06</span>
+          <span class="pill-label">LETTER</span>
+        </button>
+        <button class="dock-pill" data-goto="6" role="tab" aria-selected="false" title="Slide 07: Prayers & Blessings">
+          <span class="pill-idx">07</span>
+          <span class="pill-label">PRAYER</span>
         </button>
       </div>
 
@@ -560,7 +751,7 @@
       <div class="dock-counter">
         <span class="counter-num" id="dock-curr-idx">01</span>
         <span class="counter-slash">/</span>
-        <span class="counter-total">05</span>
+        <span class="counter-total">07</span>
       </div>
 
       <!-- Next Button -->
@@ -618,7 +809,7 @@
           </p>
           <div class="aoa-recipient-banner">
             <span class="aoa-hero-name" id="aoa-target-name">MUTHIA AFIFAH</span>
-            <span class="aoa-hero-title-tag" id="aoa-target-degree">S.S (Soon)</span>
+            <span class="aoa-hero-title-tag" id="aoa-target-degree">S.S. (Soon)</span>
           </div>
         </div>
 
@@ -649,6 +840,6 @@
     </div>
   </aside>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=3.3"></script>
 </body>
 </html>

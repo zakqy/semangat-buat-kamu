@@ -12,11 +12,14 @@ Sebuah website interaktif ucapan selamat lulus Seminar Proposal (Sempro) bertema
    - Bar atribut statistik: Penguasaan Materi, Mental Hadapi Dosen, Kesiapan Revisi, dan Skill baru *BAB 4 & 5 CONQUEROR*.
 4. **Phantom Chatroom (Metaverse Transmission)**:
    - Dialog visual novel interaktif dengan Morgana, Ryuji, Makoto, Futaba, dan Joker yang memberikan ucapan dan tips menghadapi revisian.
-5. **Didedikasikan untuk Muthia Afifah, S.S (Soon)**:
+5. **Didedikasikan untuk Muthia Afifah, S.S. (Soon)**:
    - Nama dan gelar sudah terpatri secara permanen di seluruh Calling Card, dialog, dan layar All-Out Attack.
 6. **Audio & Sound Effects**:
    - Dilengkapi synthesizer suara khas Persona 5 via Web Audio API (suara klik menu, tebasan blade, dan jingle selebrasi AOA).
    - Audio controller untuk memutar background music Persona (`School Days` by Shoji Meguro & Yumi Kawamura) dengan fitur autoplay otomatis saat web dibuka.
-7. **Persona 5 Slide Deck Mode (Per Slide Presentation)**:
-   - Format per-slide eksklusif sehingga tidak lagi menggulung panjang ke bawah.
-   - Dilengkapi **Slide Controller Dock** di bagian bawah, tombol navigasi `◀ PREV` / `NEXT ▶`, indikator slide, pintasan keyboard (`←` / `→` / `Q` / `E` / angka `1`-`5`), dan swipe gesture untuk layar sentuh / HP.
+7. **Persona 5 Slide Deck Mode (Per Slide Presentation - 7 Halaman)**:
+   - Format per-slide eksklusif dengan 7 halaman terstruktur (Mission, Calling Card, Confidant, Chatroom, Strategy, Surat Spesial Yuzare, dan Untaian Doa Yuzare).
+   - Dilengkapi **Slide Controller Dock** di bagian bawah, tombol navigasi `◀ PREV` / `NEXT ▶`, indikator slide 01-07, pintasan keyboard (`←` / `→` / `Q` / `E` / angka `1`-`7`), dan swipe gesture untuk layar sentuh / HP.
+8. **Surat Cinta & Doa Spesial dari Yuzare**:
+   - **Halaman 6**: Surat personal bernuansa kertas surat autentik Persona 5, pita ucapan, pesan apresiasi perjuangan Sempro, dan wax seal cap stempel Yuzare.
+   - **Halaman 7**: 4 kartu untaian doa tulus (Kelancaran Revisi, Kesehatan Mental & Fisik, Gelar S.S. & Wisuda Impian, Masa Depan & Pintu Rezeki) serta tombol interaktif *"Aamiinkan Doa Bersama Yuzare"*.

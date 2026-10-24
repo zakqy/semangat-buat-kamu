@@ -10,7 +10,7 @@
   // 1. STATE & TARGET CONFIGURATION
   // ==============================================================
   const DEFAULT_TARGET = 'MUTHIA AFIFAH';
-  const DEFAULT_DEGREE = 'S.S (Soon)';
+  const DEFAULT_DEGREE = 'S.S. (Soon)';
 
   let currentTarget = {
     name: DEFAULT_TARGET,
@@ -29,7 +29,15 @@
 
     if (queryName) {
       currentTarget.name = queryName.trim().toUpperCase();
-      if (queryDegree) currentTarget.degree = queryDegree.trim();
+      if (queryDegree) {
+        let cleanDegree = queryDegree.trim();
+        if (cleanDegree === 'S.S (Soon)' || cleanDegree === 'S.S') {
+          cleanDegree = 'S.S. (Soon)';
+        } else if (cleanDegree.startsWith('S.S') && !cleanDegree.startsWith('S.S.')) {
+          cleanDegree = cleanDegree.replace(/^S\.S/, 'S.S.');
+        }
+        currentTarget.degree = cleanDegree;
+      }
     } else {
       const storedName = localStorage.getItem('p5_sempro_target_name');
       const storedDegree = localStorage.getItem('p5_sempro_target_degree');
@@ -40,7 +48,15 @@
         localStorage.setItem('p5_sempro_target_name', DEFAULT_TARGET);
       }
       if (storedDegree && !storedDegree.includes('S.Kom')) {
-        currentTarget.degree = storedDegree;
+        let cleanDegree = storedDegree.trim();
+        // Standardize any previous cached format without the second period
+        if (cleanDegree === 'S.S (Soon)' || cleanDegree === 'S.S' || cleanDegree === 'S.S.(Soon)') {
+          cleanDegree = 'S.S. (Soon)';
+        } else if (cleanDegree.startsWith('S.S') && !cleanDegree.startsWith('S.S.')) {
+          cleanDegree = cleanDegree.replace(/^S\.S/, 'S.S.');
+        }
+        currentTarget.degree = cleanDegree;
+        localStorage.setItem('p5_sempro_target_degree', cleanDegree);
       } else {
         currentTarget.degree = DEFAULT_DEGREE;
         localStorage.setItem('p5_sempro_target_degree', DEFAULT_DEGREE);
@@ -53,7 +69,13 @@
   function saveTargetData(name, degree) {
     if (!name || !name.trim()) return;
     currentTarget.name = name.trim().toUpperCase();
-    currentTarget.degree = degree ? degree.trim() : DEFAULT_DEGREE;
+    let cleanDegree = degree ? degree.trim() : DEFAULT_DEGREE;
+    if (cleanDegree === 'S.S (Soon)' || cleanDegree === 'S.S') {
+      cleanDegree = 'S.S. (Soon)';
+    } else if (cleanDegree.startsWith('S.S') && !cleanDegree.startsWith('S.S.')) {
+      cleanDegree = cleanDegree.replace(/^S\.S/, 'S.S.');
+    }
+    currentTarget.degree = cleanDegree;
 
     localStorage.setItem('p5_sempro_target_name', currentTarget.name);
     localStorage.setItem('p5_sempro_target_degree', currentTarget.degree);
@@ -74,15 +96,17 @@
     const elFooterTarget = document.getElementById('footer-target-name');
     const elAoaTargetName = document.getElementById('aoa-target-name');
     const elAoaTargetDegree = document.getElementById('aoa-target-degree');
+    const elLetterTargetName = document.getElementById('letter-target-name');
 
     if (elNavTarget) elNavTarget.textContent = name;
     if (elTargetNameVal) elTargetNameVal.textContent = name;
     if (elTargetDegreeVal) elTargetDegreeVal.textContent = degree;
     if (elCardTargetBox) elCardTargetBox.textContent = name;
-    if (elConfidantTarget) elConfidantTarget.textContent = name;
-    if (elFooterTarget) elFooterTarget.textContent = name;
+    if (elConfidantTarget) elConfidantTarget.textContent = `${name}, ${degree}`;
+    if (elFooterTarget) elFooterTarget.textContent = `${name}, ${degree}`;
     if (elAoaTargetName) elAoaTargetName.textContent = name;
     if (elAoaTargetDegree) elAoaTargetDegree.textContent = degree;
+    if (elLetterTargetName) elLetterTargetName.textContent = `${name}, ${degree}`;
 
     // Update any dynamic in-text tags
     document.querySelectorAll('.d-target').forEach(el => {
@@ -194,18 +218,10 @@
   const btnToggleBgm = document.getElementById('btn-toggle-bgm');
   const bgmLabel = document.getElementById('bgm-label');
   const bgmIcon = document.getElementById('bgm-icon');
-  const audioUnlockBanner = document.getElementById('audio-unlock-banner');
 
   let unlockListenersBound = false;
 
   function updateBgmUI(isPlaying) {
-    if (audioUnlockBanner) {
-      if (isPlaying) {
-        audioUnlockBanner.classList.add('hidden-banner');
-      } else if (!btnToggleBgm?.dataset.userPaused) {
-        audioUnlockBanner.classList.remove('hidden-banner');
-      }
-    }
     if (!btnToggleBgm) return;
     if (isPlaying) {
       btnToggleBgm.classList.remove('paused');
@@ -214,7 +230,9 @@
       btnToggleBgm.setAttribute('title', 'Pause Music (School Days)');
     } else {
       btnToggleBgm.classList.add('paused');
-      if (bgmLabel) bgmLabel.textContent = 'BGM: PAUSED';
+      if (bgmLabel) {
+        bgmLabel.textContent = btnToggleBgm?.dataset.userPaused ? 'BGM: PAUSED' : 'BGM: PLAY ▶';
+      }
       if (bgmIcon) bgmIcon.textContent = '🔇';
       btnToggleBgm.setAttribute('title', 'Play Music (School Days)');
     }
@@ -278,15 +296,7 @@
       document.addEventListener(evt, handleAnyUserClickToPlay, { capture: true, passive: true });
     });
 
-    // 3. Audio unlock floating prompt click
-    if (audioUnlockBanner) {
-      audioUnlockBanner.addEventListener('click', () => {
-        delete btnToggleBgm?.dataset.userPaused;
-        playBgm();
-      });
-    }
-
-    // 4. Toggle button listener
+    // 3. Toggle button listener
     if (btnToggleBgm) {
       btnToggleBgm.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -761,6 +771,11 @@
       const isActive = idx === currentSlide;
       pill.classList.toggle('active', isActive);
       pill.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      if (isActive && typeof pill.scrollIntoView === 'function') {
+        try {
+          pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } catch (_) {}
+      }
     });
 
     if (!dockCurrIdx) dockCurrIdx = document.getElementById('dock-curr-idx');
@@ -904,7 +919,7 @@
         nextSlide();
       } else if (e.key === 'ArrowLeft' || e.key === 'PageUp' || e.key.toLowerCase() === 'q') {
         prevSlide();
-      } else if (['1', '2', '3', '4', '5'].includes(e.key)) {
+      } else if (['1', '2', '3', '4', '5', '6', '7'].includes(e.key)) {
         goToSlide(parseInt(e.key, 10) - 1);
       }
     });
@@ -948,7 +963,7 @@
     'Looking cool, Muthia! You totally stunned the examination committee! 🎓',
     'Exhausted from chapters 1 through 3? Today is time for a tasty self-reward meal! 🍕',
     'Do not fear revisions Muthia, they are just exp boosts to make your thesis overpowered! ⚡',
-    'One step closer to your Bachelor of Literature (S.S) degree! Incredibly proud of you! 🌸',
+    'One step closer to your Bachelor of Literature (S.S.) degree! Incredibly proud of you! 🌸',
     'Press "ALL-OUT ATTACK!" above to witness your special victory finisher! ⚔️',
     'Take your time, but remember to graduate on schedule, Muthia! You got this! 🎩'
   ];
@@ -958,7 +973,9 @@
     'Official Calling Card delivered from the Phantom Thieves! 💌',
     'The Scholar Arcana: Confidant Rank MAX established! 🃏',
     'Incoming Metaverse Transmission from the crew! 🐱💬',
-    'Strategy guide: 4 tips to defeat every revision remark! ⚡'
+    'Strategy guide: 4 tips to defeat every revision remark! ⚡',
+    'Surat spesial & apresiasi tulus dari Yuzare untuk Muthia~ 💌✨',
+    'Untaian doa penuh berkah dari Yuzare! Yuk aminkan bersama~ 🤲🎓'
   ];
 
   let currentCompanionQuoteIndex = 0;
@@ -1023,7 +1040,77 @@
   }
 
   // ==============================================================
-  // 9. INITIALIZATION
+  // 9. INTERACTIVE AAMIIN PRAYER SYSTEM (YUZARE LETTER)
+  // ==============================================================
+  function setupAamiinPrayer() {
+    const btnAamiin = document.getElementById('btn-aamiin-doa');
+    const elCounter = document.getElementById('aamiin-counter');
+    const elToast = document.getElementById('aamiin-toast');
+
+    if (!btnAamiin || !elCounter) return;
+
+    let aamiinCount = parseInt(localStorage.getItem('p5_yuzare_aamiin_count'), 10) || 0;
+    elCounter.textContent = `${aamiinCount} Aamiin`;
+
+    const CHEER_MESSAGES = [
+      'Aamiin ya Rabbal \'Alamin! Semoga setiap doa baik dijabah untuk Muthia 🤲✨',
+      'Aamiin! Satu doa tulus terpanjatkan untuk kelancaran skripsi Muthia! 🕊️',
+      'Aamiin! Semoga gelar S.S. segera resmi disandang dengan cumlaude! 🎓',
+      'Aamiin! Pintu rezeki dan masa depan cerah terbuka lebar untuk Muthia! 🌟',
+      'Aamiin! Semangat terus yaa Muthia, kamu pasti bisa menuntaskannya! 💖'
+    ];
+
+    btnAamiin.addEventListener('click', () => {
+      aamiinCount++;
+      localStorage.setItem('p5_yuzare_aamiin_count', aamiinCount);
+      elCounter.textContent = `${aamiinCount} Aamiin`;
+
+      playSfx('confidant');
+
+      // Animate badge bounce
+      elCounter.style.transform = 'scale(1.28) rotate(-4deg)';
+      setTimeout(() => {
+        elCounter.style.transform = '';
+      }, 200);
+
+      // Toast feedback
+      if (elToast) {
+        const msg = CHEER_MESSAGES[(aamiinCount - 1) % CHEER_MESSAGES.length];
+        elToast.textContent = msg;
+        elToast.classList.add('cheer');
+      }
+
+      // Spawn floating sparkles
+      spawnPrayerSparkles(btnAamiin);
+    });
+  }
+
+  function spawnPrayerSparkles(originEl) {
+    const rect = originEl.getBoundingClientRect();
+    const symbols = ['✨', '🤲', '🤍', '⭐', '🌸', '💫'];
+
+    for (let i = 0; i < 7; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'floating-prayer-sparkle';
+      sparkle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+
+      const startX = rect.left + rect.width / 2 + (Math.random() - 0.5) * 80;
+      const startY = rect.top + window.scrollY;
+
+      sparkle.style.left = `${startX}px`;
+      sparkle.style.top = `${startY}px`;
+      sparkle.style.fontSize = `${Math.random() * 14 + 18}px`;
+
+      document.body.appendChild(sparkle);
+
+      setTimeout(() => {
+        sparkle.remove();
+      }, 1600);
+    }
+  }
+
+  // ==============================================================
+  // 10. INITIALIZATION
   // ==============================================================
   document.addEventListener('DOMContentLoaded', () => {
     initTargetData();
@@ -1032,6 +1119,7 @@
     setupDialogueControls();
     setupNavigationButtons();
     setupJokerCompanion();
+    setupAamiinPrayer();
     renderThiefDialogue(true);
   });
 
