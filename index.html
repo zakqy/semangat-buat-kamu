@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>PROPOSAL DEFENSE CLEARED! | Persona 5 Calling Card Celebration</title>
-  <meta name="description" content="Persona 5 themed Thesis Proposal Defense Celebration with Calling Card, All-Out Attack, and Confidant Rank Up!" />
+  <meta name="description"
+    content="Persona 5 themed Thesis Proposal Defense Celebration with Calling Card, All-Out Attack, and Confidant Rank Up!" />
 
   <!-- Google Fonts: Bebas Neue, Montserrat 900, Permanent Marker & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Permanent+Marker&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Permanent+Marker&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="style.css?v=3.3" />
   <style>
     /* Prevent any cached audio-unlock-banner from rendering */
-    .p5-audio-unlock-banner, #audio-unlock-banner {
+    .p5-audio-unlock-banner,
+    #audio-unlock-banner {
       display: none !important;
       opacity: 0 !important;
       pointer-events: none !important;
@@ -22,10 +27,12 @@
     }
   </style>
 </head>
+
 <body class="p5-theme">
 
   <!-- Persona 5 Background Music (Shoji Meguro - School Days) -->
-  <audio id="bgm-audio" src="ATLUS GAME MUSIC, Yumi Kawamura Shoji Meguro - School Days.mp3" loop preload="auto" autoplay></audio>
+  <audio id="bgm-audio" src="ATLUS GAME MUSIC, Yumi Kawamura Shoji Meguro - School Days.mp3" loop preload="auto"
+    autoplay></audio>
 
   <!-- Background Metaverse Canvas -->
   <canvas id="p5-canvas"></canvas>
@@ -50,7 +57,8 @@
 
       <!-- Right: BGM Music Controller -->
       <div class="nav-right">
-        <button class="p5-nav-btn audio-btn" id="btn-toggle-bgm" aria-label="Toggle Background Music" title="Toggle BGM (School Days)">
+        <button class="p5-nav-btn audio-btn" id="btn-toggle-bgm" aria-label="Toggle Background Music"
+          title="Toggle BGM (School Days)">
           <span class="btn-skew-box">
             <span class="btn-icon" id="bgm-icon">🎵</span>
             <span class="btn-label" id="bgm-label">BGM: ON</span>
@@ -67,7 +75,7 @@
       <div class="ticker-track">
         <span>★ PROPOSAL DEFENSE CLEARED!</span>
         <span class="star-sep">★</span>
-        <span>CONGRATULATIONS MUTHIA AFIFAH, S.S. (SOON)</span>
+        <span>CONGRATULATIONS AERI</span>
         <span class="star-sep">★</span>
         <span>NEXT TARGET: FINAL THESIS & GRADUATION!</span>
         <span class="star-sep">★</span>
@@ -77,7 +85,7 @@
         <span class="star-sep">★</span>
         <span>★ PROPOSAL DEFENSE CLEARED!</span>
         <span class="star-sep">★</span>
-        <span>CONGRATULATIONS MUTHIA AFIFAH, S.S. (SOON)</span>
+        <span>CONGRATULATIONS AERI</span>
         <span class="star-sep">★</span>
         <span>NEXT TARGET: FINAL THESIS & GRADUATION!</span>
         <span class="star-sep">★</span>
@@ -114,8 +122,8 @@
           <div class="target-headline">
             <span class="tag-label">CONGRATULATIONS TO:</span>
             <div class="name-highlight-box" id="hero-display-name">
-              <span class="name-text" id="target-name-val">MUTHIA AFIFAH</span>
-              <span class="title-badge" id="target-degree-val">S.S. (Soon)</span>
+              <span class="name-text" id="target-name-val">AERI</span>
+              <span class="title-badge" id="target-degree-val" style="display: none;"></span>
             </div>
           </div>
         </div>
@@ -171,12 +179,12 @@
         <div class="calling-card-container">
           <div class="card-pin card-pin-tl"></div>
           <div class="card-pin card-pin-tr"></div>
-          
+
           <div class="card-paper-cutout">
             <!-- Card Header Slanted Ribbon -->
             <div class="card-header-ribbon">
               <div class="ribbon-box black">MADAM</div>
-              <div class="ribbon-box red" id="card-target-box">MUTHIA AFIFAH</div>
+              <div class="ribbon-box red" id="card-target-box">AERI</div>
               <div class="ribbon-box white">RULER OF THE DEFENSE ROOM</div>
             </div>
 
@@ -206,14 +214,14 @@
             <!-- Card Body Content -->
             <div class="card-body-text">
               <p class="card-lead">
-                WE HAVE HEARD THAT RECENTLY YOU WERE SHADOWED BY FEAR OF 
-                <span class="kw-black">CHAPTERS 1 THROUGH 3</span>, CONVOLUTED METHODOLOGIES, 
+                WE HAVE HEARD THAT RECENTLY YOU WERE SHADOWED BY FEAR OF
+                <span class="kw-black">CHAPTERS 1 THROUGH 3</span>, CONVOLUTED METHODOLOGIES,
                 AND THE PIERCING EYE CONTACT OF THE EXAMINERS IN THE DEFENSE ROOM.
               </p>
 
               <p class="card-para">
-                Yet on this historic day, you demonstrated your unbreakable steel will! 
-                You presented your research problem without flinching, defended your arguments 
+                Yet on this historic day, you demonstrated your unbreakable steel will!
+                You presented your research problem without flinching, defended your arguments
                 with fierce tenacity, and officially <strong>DECLARED TOTAL VICTORY</strong> in your Proposal Defense!
               </p>
 
@@ -227,9 +235,10 @@
               </div>
 
               <p class="card-threat">
-                Therefore, we <strong>THE PHANTOM THIEVES OF HEARTS</strong> have resolved to 
-                <span class="kw-red">STEAL AWAY</span> all the exhaustion, anxiety, and overthinking from within your chest! 
-                In return, we leave behind a burning determination to conquer every revision and escort you straight 
+                Therefore, we <strong>THE PHANTOM THIEVES OF HEARTS</strong> have resolved to
+                <span class="kw-red">STEAL AWAY</span> all the exhaustion, anxiety, and overthinking from within your
+                chest!
+                In return, we leave behind a burning determination to conquer every revision and escort you straight
                 to the gates of <strong>GRADUATION & YOUR BACHELOR'S DEGREE</strong>!
               </p>
 
@@ -284,11 +293,12 @@
                   <div class="academic-cap-svg">
                     <!-- Graduation / Scholar Icon SVG -->
                     <svg viewBox="0 0 100 100" class="cap-svg" fill="currentColor">
-                      <polygon points="50,15 95,35 50,55 5,35" fill="#e60012" stroke="#ffffff" stroke-width="2"/>
-                      <polygon points="50,55 85,40 85,60 50,75 15,60 15,40" fill="#111111" stroke="#ffffff" stroke-width="2"/>
-                      <line x1="85" y1="40" x2="90" y2="70" stroke="#ffe600" stroke-width="3"/>
-                      <circle cx="90" cy="73" r="4" fill="#ffe600"/>
-                      <polygon points="50,22 80,35 50,48 20,35" fill="#ffffff" opacity="0.25"/>
+                      <polygon points="50,15 95,35 50,55 5,35" fill="#e60012" stroke="#ffffff" stroke-width="2" />
+                      <polygon points="50,55 85,40 85,60 50,75 15,60 15,40" fill="#111111" stroke="#ffffff"
+                        stroke-width="2" />
+                      <line x1="85" y1="40" x2="90" y2="70" stroke="#ffe600" stroke-width="3" />
+                      <circle cx="90" cy="73" r="4" fill="#ffe600" />
+                      <polygon points="50,22 80,35 50,48 20,35" fill="#ffffff" opacity="0.25" />
                     </svg>
                   </div>
                   <div class="tarot-stars">★★★★★</div>
@@ -310,7 +320,7 @@
               <h2 class="banner-title">CONFIDANT: RANK UP!</h2>
               <div class="target-meta-tag">
                 <span>HOLDER: </span>
-                <strong id="confidant-target-name">MUTHIA AFIFAH, S.S. (Soon)</strong>
+                <strong id="confidant-target-name">AERI</strong>
               </div>
             </div>
 
@@ -358,7 +368,7 @@
               <div class="skill-badge">NEW ABILITY UNLOCKED!</div>
               <div class="skill-name">⚡ CHAPTERS 4 & 5 CONQUEROR</div>
               <p class="skill-desc">
-                Increases resilience against revision remarks by <strong>+200%</strong>, 
+                Increases resilience against revision remarks by <strong>+200%</strong>,
                 grants absolute immunity to writer's block, and triggers critical hits during final thesis work!
               </p>
             </div>
@@ -401,7 +411,8 @@
               <div class="dialogue-location">LOCATION: VELVET ROOM // CHAT LINE</div>
               <div class="dialogue-text-wrapper">
                 <p class="dialogue-text" id="dialogue-text">
-                  "Looking cool, <span class="d-target">Muthia</span>! The examination committee was completely captivated by your presentation today!"
+                  "Looking cool, <span class="d-target">AERI</span>! The examination committee was completely
+                  captivated by your presentation today!"
                 </p>
               </div>
 
@@ -465,7 +476,7 @@
             <div class="tip-num">01</div>
             <h3 class="tip-title">SELF-REWARD FIRST!</h3>
             <p class="tip-desc">
-              The proposal defense is tough and you conquered it! Today you must get plenty of rest, 
+              The proposal defense is tough and you conquered it! Today you must get plenty of rest,
               enjoy your favorite meals, or binge games completely guilt-free.
             </p>
           </div>
@@ -474,7 +485,7 @@
             <div class="tip-num">02</div>
             <h3 class="tip-title">LOG ALL EXAMINER NOTES</h3>
             <p class="tip-desc">
-              Revisions aren't a sign of failure—they're cheat codes to make your thesis flawless! 
+              Revisions aren't a sign of failure—they're cheat codes to make your thesis flawless!
               Gather all examiner notes, sorting what's quick versus what needs consultation.
             </p>
           </div>
@@ -483,7 +494,7 @@
             <div class="tip-num">03</div>
             <h3 class="tip-title">TACKLE REVISIONS EARLY</h3>
             <p class="tip-desc">
-              The sooner revisions are wrapped up, the faster you collect research data. 
+              The sooner revisions are wrapped up, the faster you collect research data.
               Remember: the best thesis is a finished thesis!
             </p>
           </div>
@@ -492,7 +503,7 @@
             <div class="tip-num">04</div>
             <h3 class="tip-title">GRADUATION AWAITS</h3>
             <p class="tip-desc">
-              You are well past the halfway mark of your degree. Don't let up on the final stretch; 
+              You are well past the halfway mark of your degree. Don't let up on the final stretch;
               all our best thoughts and cheers accompany you toward the finish line!
             </p>
           </div>
@@ -529,13 +540,13 @@
               <!-- Slanted Greeting Ribbon -->
               <div class="letter-head-ribbons">
                 <span class="ribbon-tag black">SPESIAL UNTUK:</span>
-                <span class="ribbon-tag red" id="letter-target-name">MUTHIA AFIFAH, S.S. (SOON)</span>
+                <span class="ribbon-tag red" id="letter-target-name">AERI</span>
                 <span class="ribbon-tag white">DARI: YUZARE 💌</span>
               </div>
 
               <div class="letter-title-block">
                 <h2 class="letter-main-title">
-                  <span class="title-highlight">SELAMAT YA, MUTHIA!</span>
+                  <span class="title-highlight">SELAMAT YA, AERIII!</span>
                   <span class="title-sub">SATU TAHAP BESAR TELAH KAMU TAKLUKKAN DENGAN LUAR BIASA ✨</span>
                 </h2>
               </div>
@@ -543,20 +554,25 @@
               <!-- Letter Body Content -->
               <div class="letter-body-prose">
                 <p class="letter-p lead-p">
-                  Muthiaaaa Selamat ya atas seminar proposalnya hari ini! 🎉
-                  Akhirnya satu tahap penting berhasil kamu lewati. Semoga proses selanjutnya dilancarkan dan kamu bisa terus memberikan yang terbaik sampai nanti selesai.
-                  Good job, Muthia!
+                  AERIII Selamat ya atas seminar proposalnya hari ini! 🎉
+                  Akhirnya satu tahap penting berhasil kamu lewati. Semoga proses selanjutnya dilancarkan dan kamu bisa
+                  terus memberikan yang terbaik sampai nanti selesai.
+                  Good job, AERI!
                 </p>
 
                 <p class="letter-p">
-                  Aku tahu sampai di titik ini pasti nggak selalu mudah. Ada banyak hal yang harus kamu lewati, mulai dari menyusun Bab 1 sampai Bab 3,
-                  revisi, sampai rasa bingung dan capek selama prosesnya. Tapi, lihat deh, sekarang kamu berhasil melewati satu tahap penting. Semua usaha dan waktu yang sudah kamu luangkan akhirnya membawamu sampai di sini.
-                  You did a great job, Muthia! Semoga tahap selanjutnya juga berjalan lancar, ya.
+                  Aku tahu sampai di titik ini pasti nggak selalu mudah. Ada banyak hal yang harus kamu lewati, mulai
+                  dari menyusun Bab 1 sampai Bab 3,
+                  revisi, sampai rasa bingung dan capek selama prosesnya. Tapi, lihat deh, sekarang kamu berhasil
+                  melewati satu tahap penting. Semua usaha dan waktu yang sudah kamu luangkan akhirnya membawamu sampai
+                  di sini.
+                  You did a great job, AERI! Semoga tahap selanjutnya juga berjalan lancar, ya.
                 </p>
 
                 <p class="letter-p highlight-p">
-                  Setelah hari ini, jangan lupa beri apresiasi besar untuk dirimu sendiri ya. 
-                  Istirahatkan fisik dan pikiranmu, nikmati makanan favorit, dan rayakan kemenangan yang sangat berarti ini tanpa beban!
+                  Setelah hari ini, jangan lupa beri apresiasi besar untuk dirimu sendiri ya.
+                  Istirahatkan fisik dan pikiranmu, nikmati makanan favorit, dan rayakan kemenangan yang sangat berarti
+                  ini tanpa beban!
                 </p>
               </div>
 
@@ -572,7 +588,8 @@
                 <div class="sign-text-group">
                   <div class="sign-salutation">Wishing You All the Best!✨</div>
                   <div class="sign-author">Yuzare ✍️</div>
-                  <div class="sign-motto">"Tetap percaya pada dirimu yaa, Muthia. Satu gerbang sudah kamu lewati, dan aku yakin kamu sanggup menuntaskan semuanya sampai toga tersemat indah di kepalamu!"</div>
+                  <div class="sign-motto">"Tetap percaya pada dirimu yaa, AERI. Satu gerbang sudah kamu lewati, dan
+                    aku yakin kamu sanggup menuntaskan semuanya sampai toga tersemat indah di kepalamu!"</div>
                 </div>
               </div>
             </article>
@@ -602,7 +619,7 @@
           <div class="prayer-outer-frame">
             <div class="prayer-stamp-corner">
               <span class="stamp-p5">BLESSING // P5</span>
-              <span class="stamp-date">FOR MUTHIA AFIFAH, S.S.</span>
+              <span class="stamp-date">FOR AERI</span>
             </div>
 
             <!-- Special Prayer / Harapan Standalone Container -->
@@ -611,7 +628,7 @@
                 <span class="pb-icon">🤲</span>
                 <div class="pb-texts">
                   <span class="pb-title">DOA DARI YUZARE</span>
-                  <span class="pb-subtitle">Untuk setiap langkah dan perjalanan Muthia ke depannya</span>
+                  <span class="pb-subtitle">Untuk setiap langkah dan perjalanan ke depannya</span>
                 </div>
               </div>
 
@@ -621,8 +638,8 @@
                   <div class="prayer-content">
                     <h4 class="prayer-tit">KELANCARAN REVISI &amp; BAB LANJUTAN</h4>
                     <p class="prayer-txt">
-                      Semoga setiap catatan revisi dari penguji bisa dipahami dan dibereskan dengan mudah. 
-                      Diberikan kelancaran saat bimbingan, dosen yang selalu pengertian dan suportif, 
+                      Semoga setiap catatan revisi dari penguji bisa dipahami dan dibereskan dengan mudah.
+                      Diberikan kelancaran saat bimbingan, dosen yang selalu pengertian dan suportif,
                       serta inspirasi yang terus mengalir deras dalam menyusun Bab 4 dan Bab 5 nanti.
                     </p>
                   </div>
@@ -633,8 +650,8 @@
                   <div class="prayer-content">
                     <h4 class="prayer-tit">KESEHATAN, HATI YANG LAPANG &amp; ENERGI POSITIF</h4>
                     <p class="prayer-txt">
-                      Semoga kamu selalu diberikan kesehatan fisik dan mental yang prima. 
-                      Dijauhkan dari rasa lelah berlebih, disingkirkan dari segala kecemasan yang memberatkan, 
+                      Semoga kamu selalu diberikan kesehatan fisik dan mental yang prima.
+                      Dijauhkan dari rasa lelah berlebih, disingkirkan dari segala kecemasan yang memberatkan,
                       dan hatimu senantiasa dipenuhi ketenangan, kebahagiaan, serta semangat baru setiap harinya.
                     </p>
                   </div>
@@ -643,10 +660,11 @@
                 <div class="prayer-card p-card-3">
                   <div class="prayer-icon-badge">🎓</div>
                   <div class="prayer-content">
-                    <h4 class="prayer-tit">GELAR S.S. &amp; HARI WISUDA IMPIAN</h4>
+                    <h4 class="prayer-tit">GELAR SARJANA &amp; HARI WISUDA IMPIAN</h4>
                     <p class="prayer-txt">
-                      Semoga jalan menuju Sidang Skripsi (Munaqasyah) dimudahkan dan dipercepat tanpa hambatan yang berarti. 
-                      Hingga hari bahagia wisuda tiba, resmi menyandang gelar <strong>Sarjana Sastra (S.S.)</strong> 
+                      Semoga jalan menuju Sidang Skripsi (Munaqasyah) dimudahkan dan dipercepat tanpa hambatan yang
+                      berarti.
+                      Hingga hari bahagia wisuda tiba, resmi menyandang gelar sarjana
                       dengan predikat terbaik yang membanggakan dirimu dan orang tua tercinta.
                     </p>
                   </div>
@@ -657,8 +675,9 @@
                   <div class="prayer-content">
                     <h4 class="prayer-tit">MASA DEPAN BERKAH &amp; PINTU REZEKI TERBUKA</h4>
                     <p class="prayer-txt">
-                      Semoga setelah lulus nanti, semua cita-cita, karir impian, dan rencana baik yang kamu impikan 
-                      diberikan jalan yang lapang, dilancarkan rezekinya, dan didekatkan dengan segala hal-hal baik yang berkah.
+                      Semoga setelah lulus nanti, semua cita-cita, karir impian, dan rencana baik yang kamu impikan
+                      diberikan jalan yang lapang, dilancarkan rezekinya, dan didekatkan dengan segala hal-hal baik yang
+                      berkah.
                     </p>
                   </div>
                 </div>
@@ -666,14 +685,16 @@
 
               <!-- Interactive Aamiin Button -->
               <div class="prayer-action-container">
-                <button class="p5-btn btn-aamiin-letter" id="btn-aamiin-doa" data-sfx="confidant" title="Klik untuk mengaminkan untaian doa ini">
+                <button class="p5-btn btn-aamiin-letter" id="btn-aamiin-doa" data-sfx="confidant"
+                  title="Klik untuk mengaminkan untaian doa ini">
                   <span class="btn-inner aamiin-inner">
                     <span class="aamiin-hands">🤲</span>
                     <span class="aamiin-text">AAMIINKAN DOA</span>
                     <span class="aamiin-badge" id="aamiin-counter">0 Aamiin</span>
                   </span>
                 </button>
-                <p class="aamiin-hint" id="aamiin-toast">Sentuh tombol untuk bersama-sama mengaminkan doa baik ini! ✨</p>
+                <p class="aamiin-hint" id="aamiin-toast">Sentuh tombol untuk bersama-sama mengaminkan doa baik ini! ✨
+                </p>
               </div>
             </div>
           </div>
@@ -696,7 +717,7 @@
             <span class="f-star">★</span>
           </div>
           <p class="footer-sub">
-            Dedicated with high spirit to our champion: <strong id="footer-target-name">Muthia Afifah, S.S. (Soon)</strong>. 
+            Dedicated with high spirit to our champion: <strong id="footer-target-name">Aeri</strong>.
             You'll never see it coming!
           </p>
         </div>
@@ -729,7 +750,8 @@
           <span class="pill-idx">03</span>
           <span class="pill-label">CONFIDANT</span>
         </button>
-        <button class="dock-pill" data-goto="3" role="tab" aria-selected="false" title="Slide 04: Metaverse Transmission">
+        <button class="dock-pill" data-goto="3" role="tab" aria-selected="false"
+          title="Slide 04: Metaverse Transmission">
           <span class="pill-idx">04</span>
           <span class="pill-label">CHAT</span>
         </button>
@@ -737,7 +759,8 @@
           <span class="pill-idx">05</span>
           <span class="pill-label">STRATEGY</span>
         </button>
-        <button class="dock-pill" data-goto="5" role="tab" aria-selected="false" title="Slide 06: Special Letter from Yuzare">
+        <button class="dock-pill" data-goto="5" role="tab" aria-selected="false"
+          title="Slide 06: Special Letter from Yuzare">
           <span class="pill-idx">06</span>
           <span class="pill-label">LETTER</span>
         </button>
@@ -766,7 +789,8 @@
   <!-- ============================================================== -->
   <div class="aoa-modal" id="aoa-modal" role="dialog" aria-hidden="true">
     <!-- Quick Corner Close Button -->
-    <button class="aoa-corner-close" id="btn-corner-close-aoa" aria-label="Close All-Out Attack Finisher" title="Close (ESC)">
+    <button class="aoa-corner-close" id="btn-corner-close-aoa" aria-label="Close All-Out Attack Finisher"
+      title="Close (ESC)">
       <span class="corner-close-icon">✖</span>
       <span class="corner-close-text">CLOSE [ESC]</span>
     </button>
@@ -808,8 +832,8 @@
             "THE EXAMINING COMMITTEE HAS BEEN DEFEATED. THE DEFENSE CHAMBER HAS FALLEN!"
           </p>
           <div class="aoa-recipient-banner">
-            <span class="aoa-hero-name" id="aoa-target-name">MUTHIA AFIFAH</span>
-            <span class="aoa-hero-title-tag" id="aoa-target-degree">S.S. (Soon)</span>
+            <span class="aoa-hero-name" id="aoa-target-name">AERI</span>
+            <span class="aoa-hero-title-tag" id="aoa-target-degree" style="display: none;"></span>
           </div>
         </div>
 
@@ -831,7 +855,7 @@
   <aside class="joker-floating-companion" id="joker-companion" aria-label="Joker Companion">
     <div class="joker-speech-bubble" id="joker-speech" title="Click to hear another message!">
       <div class="speech-text" id="joker-speech-text">
-        Hey Muthia! Tap me or open the calling card~ 🃏✨
+        Hey AERI! Tap me or open the calling card~ 🃏✨
       </div>
       <div class="speech-tail"></div>
     </div>
@@ -842,4 +866,5 @@
 
   <script src="script.js?v=3.3"></script>
 </body>
+
 </html>

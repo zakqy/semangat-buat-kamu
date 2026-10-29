@@ -9,8 +9,8 @@
   // ==============================================================
   // 1. STATE & TARGET CONFIGURATION
   // ==============================================================
-  const DEFAULT_TARGET = 'MUTHIA AFIFAH';
-  const DEFAULT_DEGREE = 'S.S. (Soon)';
+  const DEFAULT_TARGET = 'AERI';
+  const DEFAULT_DEGREE = '';
 
   let currentTarget = {
     name: DEFAULT_TARGET,
@@ -29,34 +29,24 @@
 
     if (queryName) {
       currentTarget.name = queryName.trim().toUpperCase();
-      if (queryDegree) {
+      if (queryDegree !== null) {
         let cleanDegree = queryDegree.trim();
-        if (cleanDegree === 'S.S (Soon)' || cleanDegree === 'S.S') {
-          cleanDegree = 'S.S. (Soon)';
-        } else if (cleanDegree.startsWith('S.S') && !cleanDegree.startsWith('S.S.')) {
-          cleanDegree = cleanDegree.replace(/^S\.S/, 'S.S.');
+        if (cleanDegree.includes('S.S')) {
+          cleanDegree = '';
         }
         currentTarget.degree = cleanDegree;
       }
     } else {
       const storedName = localStorage.getItem('p5_sempro_target_name');
       const storedDegree = localStorage.getItem('p5_sempro_target_degree');
-      if (storedName && !storedName.includes('SOBAT')) {
+      if (storedName && !storedName.includes('SOBAT') && !storedName.includes('MUTHIA')) {
         currentTarget.name = storedName.toUpperCase();
       } else {
         currentTarget.name = DEFAULT_TARGET;
         localStorage.setItem('p5_sempro_target_name', DEFAULT_TARGET);
       }
-      if (storedDegree && !storedDegree.includes('S.Kom')) {
-        let cleanDegree = storedDegree.trim();
-        // Standardize any previous cached format without the second period
-        if (cleanDegree === 'S.S (Soon)' || cleanDegree === 'S.S' || cleanDegree === 'S.S.(Soon)') {
-          cleanDegree = 'S.S. (Soon)';
-        } else if (cleanDegree.startsWith('S.S') && !cleanDegree.startsWith('S.S.')) {
-          cleanDegree = cleanDegree.replace(/^S\.S/, 'S.S.');
-        }
-        currentTarget.degree = cleanDegree;
-        localStorage.setItem('p5_sempro_target_degree', cleanDegree);
+      if (storedDegree && !storedDegree.includes('S.Kom') && !storedDegree.includes('S.S')) {
+        currentTarget.degree = storedDegree.trim();
       } else {
         currentTarget.degree = DEFAULT_DEGREE;
         localStorage.setItem('p5_sempro_target_degree', DEFAULT_DEGREE);
@@ -70,10 +60,8 @@
     if (!name || !name.trim()) return;
     currentTarget.name = name.trim().toUpperCase();
     let cleanDegree = degree ? degree.trim() : DEFAULT_DEGREE;
-    if (cleanDegree === 'S.S (Soon)' || cleanDegree === 'S.S') {
-      cleanDegree = 'S.S. (Soon)';
-    } else if (cleanDegree.startsWith('S.S') && !cleanDegree.startsWith('S.S.')) {
-      cleanDegree = cleanDegree.replace(/^S\.S/, 'S.S.');
+    if (cleanDegree.includes('S.S')) {
+      cleanDegree = '';
     }
     currentTarget.degree = cleanDegree;
 
@@ -100,13 +88,29 @@
 
     if (elNavTarget) elNavTarget.textContent = name;
     if (elTargetNameVal) elTargetNameVal.textContent = name;
-    if (elTargetDegreeVal) elTargetDegreeVal.textContent = degree;
+    if (elTargetDegreeVal) {
+      if (degree) {
+        elTargetDegreeVal.textContent = degree;
+        elTargetDegreeVal.style.display = '';
+      } else {
+        elTargetDegreeVal.textContent = '';
+        elTargetDegreeVal.style.display = 'none';
+      }
+    }
     if (elCardTargetBox) elCardTargetBox.textContent = name;
-    if (elConfidantTarget) elConfidantTarget.textContent = `${name}, ${degree}`;
-    if (elFooterTarget) elFooterTarget.textContent = `${name}, ${degree}`;
+    if (elConfidantTarget) elConfidantTarget.textContent = degree ? `${name}, ${degree}` : name;
+    if (elFooterTarget) elFooterTarget.textContent = degree ? `${name}, ${degree}` : name;
     if (elAoaTargetName) elAoaTargetName.textContent = name;
-    if (elAoaTargetDegree) elAoaTargetDegree.textContent = degree;
-    if (elLetterTargetName) elLetterTargetName.textContent = `${name}, ${degree}`;
+    if (elAoaTargetDegree) {
+      if (degree) {
+        elAoaTargetDegree.textContent = degree;
+        elAoaTargetDegree.style.display = '';
+      } else {
+        elAoaTargetDegree.textContent = '';
+        elAoaTargetDegree.style.display = 'none';
+      }
+    }
+    if (elLetterTargetName) elLetterTargetName.textContent = degree ? `${name}, ${degree}` : name;
 
     // Update any dynamic in-text tags
     document.querySelectorAll('.d-target').forEach(el => {
@@ -959,13 +963,13 @@
   // 8. FLOATING JOKER COMPANION INTERACTION
   // ==============================================================
   const JOKER_COMPANION_QUOTES = [
-    'Hey Muthia! Tap me or open the calling card~ 🃏✨',
-    'Looking cool, Muthia! You totally stunned the examination committee! 🎓',
+    'Hey AERI! Tap me or open the calling card~ 🃏✨',
+    'Looking cool, AERI! You totally stunned the examination committee! 🎓',
     'Exhausted from chapters 1 through 3? Today is time for a tasty self-reward meal! 🍕',
-    'Do not fear revisions Muthia, they are just exp boosts to make your thesis overpowered! ⚡',
-    'One step closer to your Bachelor of Literature (S.S.) degree! Incredibly proud of you! 🌸',
+    'Do not fear revisions AERI, they are just exp boosts to make your thesis overpowered! ⚡',
+    'One step closer to your graduation! Incredibly proud of you! 🌸',
     'Press "ALL-OUT ATTACK!" above to witness your special victory finisher! ⚔️',
-    'Take your time, but remember to graduate on schedule, Muthia! You got this! 🎩'
+    'Take your time, but remember to graduate on schedule, AERI! You got this! 🎩'
   ];
 
   const JOKER_SLIDE_REACTIONS = [
@@ -974,7 +978,7 @@
     'The Scholar Arcana: Confidant Rank MAX established! 🃏',
     'Incoming Metaverse Transmission from the crew! 🐱💬',
     'Strategy guide: 4 tips to defeat every revision remark! ⚡',
-    'Surat spesial & apresiasi tulus dari Yuzare untuk Muthia~ 💌✨',
+    'Surat spesial & apresiasi tulus dari Yuzare untuk AERI~ 💌✨',
     'Untaian doa penuh berkah dari Yuzare! Yuk aminkan bersama~ 🤲🎓'
   ];
 
@@ -1053,11 +1057,11 @@
     elCounter.textContent = `${aamiinCount} Aamiin`;
 
     const CHEER_MESSAGES = [
-      'Aamiin ya Rabbal \'Alamin! Semoga setiap doa baik dijabah untuk Muthia 🤲✨',
-      'Aamiin! Satu doa tulus terpanjatkan untuk kelancaran skripsi Muthia! 🕊️',
-      'Aamiin! Semoga gelar S.S. segera resmi disandang dengan cumlaude! 🎓',
-      'Aamiin! Pintu rezeki dan masa depan cerah terbuka lebar untuk Muthia! 🌟',
-      'Aamiin! Semangat terus yaa Muthia, kamu pasti bisa menuntaskannya! 💖'
+      'Aamiin ya Rabbal \'Alamin! Semoga setiap doa baik dijabah untuk AERI 🤲✨',
+      'Aamiin! Satu doa tulus terpanjatkan untuk kelancaran skripsi AERI! 🕊️',
+      'Aamiin! Semoga wisuda impian segera terwujud dengan hasil terbaik! 🎓',
+      'Aamiin! Pintu rezeki dan masa depan cerah terbuka lebar untuk AERI! 🌟',
+      'Aamiin! Semangat terus yaa AERI, kamu pasti bisa menuntaskannya! 💖'
     ];
 
     btnAamiin.addEventListener('click', () => {
